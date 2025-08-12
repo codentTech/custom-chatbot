@@ -217,23 +217,23 @@ export default function Header({
   return (
     <>
       <div
-        className={`${isDarkMode ? "glass-dark border-gray-700/30" : "glass border-gray-200/30"} border-b border-b-purple-950 px-6 py-[7.5px] flex items-center backdrop-blur-md relative overflow-visible`}
+        className={`${isDarkMode ? "glass-dark border-gray-700/30" : "glass border-gray-200/30"} border-b border-b-purple-950 px-3 sm:px-6 py-2 sm:py-[7.5px] flex items-center backdrop-blur-md relative overflow-visible`}
       >
         {/* Left Section */}
-        <div className="flex items-center gap-4 flex-1">
+        <div className="flex items-center gap-2 sm:gap-4 flex-1">
           <button
             onClick={() => setSidebarOpen(!sidebarOpen)}
             className={`lg:hidden p-2 rounded-xl hover:${isDarkMode ? "bg-gray-800/50" : "bg-white/50"} transition-colors backdrop-blur-sm`}
           >
             {sidebarOpen ? (
-              <X className="w-5 h-5" />
+              <X className="w-4 h-4 sm:w-5 sm:h-5" />
             ) : (
-              <Menu className="w-5 h-5" />
+              <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3">
             <h1
-              className={`text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}
+              className={`text-base sm:text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}
             >
               {title}
             </h1>
@@ -242,10 +242,10 @@ export default function Header({
 
         {/* Center Section - Model Dropdown */}
         <div className="flex items-center justify-center flex-1">
-          <div className="relative w-full max-w-[370px]">
+          <div className="relative w-full max-w-[280px] sm:max-w-[320px] md:max-w-[350px] lg:max-w-[370px]">
             <button
               onClick={handleModelDropdownToggle}
-              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border shadow-sm transition-all duration-200 text-sm font-medium group hover:shadow-md
+              className={`w-full flex items-center justify-between px-3 sm:px-4 py-2.5 sm:py-3 rounded-lg border shadow-sm transition-all duration-200 text-sm font-medium group hover:shadow-md
                 ${
                   isDarkMode
                     ? "bg-gray-900 border-purple-900 text-purple-200 hover:border-purple-700 hover:bg-gray-800"
@@ -253,21 +253,23 @@ export default function Header({
                 }
               `}
             >
-              <div className="flex items-center gap-3">
+              <div className="flex items-center gap-2 sm:gap-3">
                 <selectedModelData.icon
-                  className={`w-4 h-4 ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
+                  className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
                 />
                 <div className="text-left">
-                  <div className="font-semibold">{selectedModelData.label}</div>
+                  <div className="font-semibold text-xs sm:text-sm">
+                    {selectedModelData.label}
+                  </div>
                   <div
-                    className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                    className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"} hidden sm:block`}
                   >
                     {selectedModelData.category}
                   </div>
                 </div>
               </div>
               <ChevronDown
-                className={`w-4 h-4 transition-transform duration-200 ${
+                className={`w-3.5 h-3.5 sm:w-4 sm:h-4 transition-transform duration-200 ${
                   showModelDropdown ? "rotate-180" : ""
                 } ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
               />
@@ -276,29 +278,29 @@ export default function Header({
         </div>
 
         {/* Right Section */}
-        <div className="flex items-center gap-2 flex-1 justify-end">
+        <div className="flex items-center gap-1 sm:gap-2 flex-1 justify-end">
           <button
-            className={`p-2 rounded-xl hover:${isDarkMode ? "bg-gray-800/50" : "bg-white/50"} transition-colors ${isDarkMode ? "text-gray-400" : "text-gray-500"} backdrop-blur-sm`}
+            className={`p-1.5 sm:p-2 rounded-xl hover:${isDarkMode ? "bg-gray-800/50" : "bg-white/50"} transition-colors ${isDarkMode ? "text-gray-400" : "text-gray-500"} backdrop-blur-sm`}
           >
-            <Share2 className="w-4 h-4" />
+            <Share2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
           </button>
 
           {/* User Profile Dropdown */}
           <div className="relative">
             <button
               onClick={handleDropdownToggle}
-              className={`flex items-center gap-2 p-2 rounded-xl hover:${isDarkMode ? "bg-gray-800/50" : "bg-white/50"} transition-colors ${isDarkMode ? "text-gray-400" : "text-gray-500"} backdrop-blur-sm`}
+              className={`flex items-center gap-1.5 sm:gap-2 p-1.5 sm:p-2 rounded-xl hover:${isDarkMode ? "bg-gray-800/50" : "bg-white/50"} transition-colors ${isDarkMode ? "text-gray-400" : "text-gray-500"} backdrop-blur-sm`}
             >
-              <div className="w-8 h-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center">
-                <User className="w-4 h-4 text-white" />
+              <div className="w-6 h-6 sm:w-8 sm:h-8 bg-gradient-to-r from-purple-600 to-indigo-600 rounded-full flex items-center justify-center">
+                <User className="w-3 h-3 sm:w-4 sm:h-4 text-white" />
               </div>
               <span
-                className={`text-sm font-medium ${isDarkMode ? "text-white" : "text-gray-900"}`}
+                className={`text-xs sm:text-sm font-medium ${isDarkMode ? "text-white" : "text-gray-900"} hidden sm:block`}
               >
                 John Doe
               </span>
               <ChevronDown
-                className={`w-4 h-4 transition-transform ${showUserDropdown ? "rotate-180" : ""}`}
+                className={`w-3 h-3 sm:w-4 sm:h-4 transition-transform ${showUserDropdown ? "rotate-180" : ""}`}
               />
             </button>
           </div>
@@ -318,7 +320,7 @@ export default function Header({
           className="pointer-events-auto"
         >
           <div
-            className={`rounded-lg shadow-2xl border max-h-96 overflow-hidden ${
+            className={`rounded-lg shadow-2xl border max-h-80 sm:max-h-96 overflow-hidden ${
               isDarkMode
                 ? "bg-gray-900 border-gray-700 shadow-gray-900/50"
                 : "bg-white border-gray-200 shadow-gray-200/50"
@@ -326,7 +328,7 @@ export default function Header({
           >
             {/* Scrollable container */}
             <div
-              className="max-h-80 overflow-y-auto"
+              className="max-h-64 sm:max-h-80 overflow-y-auto"
               style={{
                 scrollbarWidth: "thin",
                 scrollbarColor: isDarkMode
@@ -354,7 +356,7 @@ export default function Header({
                 <button
                   key={model.value}
                   onClick={() => handleModelSelect(model.value)}
-                  className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:transition-colors ${
+                  className={`w-full flex items-center gap-2 sm:gap-3 px-3 sm:px-4 py-2.5 sm:py-3 text-left hover:transition-colors ${
                     model.value === selectedModel
                       ? isDarkMode
                         ? "bg-purple-900/20 text-purple-200 border-l-2 border-purple-500"
@@ -365,7 +367,7 @@ export default function Header({
                   }`}
                 >
                   <model.icon
-                    className={`w-4 h-4 ${
+                    className={`w-3.5 h-3.5 sm:w-4 sm:h-4 ${
                       model.value === selectedModel
                         ? isDarkMode
                           ? "text-purple-400"
@@ -376,7 +378,9 @@ export default function Header({
                     }`}
                   />
                   <div className="flex-1">
-                    <div className="font-medium">{model.label}</div>
+                    <div className="font-medium text-xs sm:text-sm">
+                      {model.label}
+                    </div>
                     <div
                       className={`text-xs ${
                         model.value === selectedModel
@@ -386,14 +390,14 @@ export default function Header({
                           : isDarkMode
                             ? "text-gray-400"
                             : "text-gray-500"
-                      }`}
+                      } hidden sm:block`}
                     >
                       {model.description}
                     </div>
                   </div>
                   {model.value === selectedModel && (
                     <div
-                      className={`w-2 h-2 rounded-full ${
+                      className={`w-1.5 h-1.5 sm:w-2 sm:h-2 rounded-full ${
                         isDarkMode ? "bg-purple-400" : "bg-purple-600"
                       }`}
                     />

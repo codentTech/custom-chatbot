@@ -169,12 +169,14 @@ export default function AIChatbotUI() {
         setMessage={setMessage}
         isRecording={isRecording}
         setIsRecording={setIsRecording}
+        sidebarOpen={sidebarOpen}
+        setSidebarOpen={setSidebarOpen}
       />
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
         <div
-          className="lg:hidden fixed inset-0 bg-black/30 backdrop-blur-sm z-20"
+          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-20"
           onClick={() => setSidebarOpen(false)}
         />
       )}
@@ -182,9 +184,10 @@ export default function AIChatbotUI() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setSidebarOpen(true)}
-        className={`lg:hidden fixed top-4 left-4 z-40 p-3 ${isDarkMode ? "bg-slate-800/80 hover:bg-slate-700/80 border-purple-700/50" : "bg-white/80 hover:bg-purple-50/80 border-purple-200"} border rounded-xl backdrop-blur-md transition-all duration-200 ${isDarkMode ? "text-purple-300" : "text-purple-600"} shadow-lg`}
+        className={`lg:hidden fixed top-4 left-4 z-40 p-2.5 ${isDarkMode ? "bg-slate-800/90 hover:bg-slate-700/90 border-purple-700/50" : "bg-white/90 hover:bg-purple-50/90 border-purple-200"} border rounded-xl backdrop-blur-md transition-all duration-200 ${isDarkMode ? "text-purple-300" : "text-purple-600"} shadow-lg`}
+        aria-label="Open menu"
       >
-        <Menu size={20} />
+        <Menu size={18} />
       </button>
     </div>
   );
