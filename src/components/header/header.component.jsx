@@ -231,7 +231,7 @@ export default function Header({
               <Menu className="w-4 h-4 sm:w-5 sm:h-5" />
             )}
           </button>
-          <div className="flex items-center gap-2 sm:gap-3">
+          <div className="items-center gap-2 sm:gap-3 hidden md:flex">
             <h1
               className={`text-base sm:text-lg font-semibold ${isDarkMode ? "text-white" : "text-gray-900"}`}
             >
