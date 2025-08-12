@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import {
   Copy,
   Edit,
@@ -21,14 +22,16 @@ function ChatArea({
   isRecording,
   setIsRecording,
 }) {
+  const [selectedModel, setSelectedModel] = useState("gpt-4o");
+
   return (
     <div className="flex-1 flex flex-col relative">
       {/* Enhanced Header */}
       <Header
         isDarkMode={isDarkMode}
         title="NeuralFlow Chat"
-        selectedModel="GPT-4o"
-        setSelectedModel={() => {}}
+        selectedModel={selectedModel}
+        setSelectedModel={setSelectedModel}
       />
 
       {/* Enhanced Chat Messages */}

@@ -8,28 +8,157 @@ import {
   Share2,
   User,
   X,
+  Sparkles,
+  Brain,
+  Zap,
 } from "lucide-react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 export default function Header({
   isDarkMode,
   sidebarOpen,
   setSidebarOpen,
   title,
-  selectedModel = "GPT-4o",
+  selectedModel = "gpt-4o", // Keep this as the default value for backward compatibility
   setSelectedModel = () => {},
 }) {
   const [showUserDropdown, setShowUserDropdown] = useState(false);
+  const [showModelDropdown, setShowModelDropdown] = useState(false);
   const [dropdownPosition, setDropdownPosition] = useState({
     top: 0,
     right: 0,
   });
+  const [modelDropdownPosition, setModelDropdownPosition] = useState({
+    top: 0,
+    left: 0,
+    width: 0,
+  });
+
+  // Close dropdowns when scrolling
+  useEffect(() => {
+    const handleScroll = () => {
+      if (showModelDropdown || showUserDropdown) {
+        setShowModelDropdown(false);
+        setShowUserDropdown(false);
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [showModelDropdown, showUserDropdown]);
+
+  // Close dropdowns when window resizes
+  useEffect(() => {
+    const handleResize = () => {
+      if (showModelDropdown || showUserDropdown) {
+        setShowModelDropdown(false);
+        setShowUserDropdown(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, [showModelDropdown, showUserDropdown]);
 
   const models = [
-    { label: "GPT-4o", value: "gpt-4o" },
-    { label: "GPT-4", value: "gpt-4" },
-    { label: "Claude 3", value: "claude-3" },
-    { label: "Gemini 1.5", value: "gemini-1.5" },
+    {
+      label: "Omni",
+      value: "gpt-4o",
+      description: "Most capable GPT model",
+      icon: Sparkles,
+      category: "OpenAI",
+    },
+    {
+      label: "Turbo",
+      value: "gpt-4-turbo",
+      description: "Latest GPT-4 model",
+      icon: Zap,
+      category: "OpenAI",
+    },
+    {
+      label: "Classic",
+      value: "gpt-4",
+      description: "GPT-4 base model",
+      icon: Brain,
+      category: "OpenAI",
+    },
+    {
+      label: "Swift",
+      value: "gpt-3.5-turbo",
+      description: "Fast and efficient",
+      icon: Zap,
+      category: "OpenAI",
+    },
+    {
+      label: "Sonnet",
+      value: "claude-3.5-sonnet",
+      description: "Most capable Claude model",
+      icon: Brain,
+      category: "Anthropic",
+    },
+    {
+      label: "Opus",
+      value: "claude-3-opus",
+      description: "Claude 3 Opus model",
+      icon: Brain,
+      category: "Anthropic",
+    },
+    {
+      label: "Harmony",
+      value: "claude-3-sonnet",
+      description: "Claude 3 Sonnet model",
+      icon: Brain,
+      category: "Anthropic",
+    },
+    {
+      label: "Haiku",
+      value: "claude-3-haiku",
+      description: "Fastest Claude model",
+      icon: Zap,
+      category: "Anthropic",
+    },
+    {
+      label: "Pro",
+      value: "gemini-1.5-pro",
+      description: "Most capable Gemini model",
+      icon: Sparkles,
+      category: "Google",
+    },
+    {
+      label: "Flash",
+      value: "gemini-1.5-flash",
+      description: "Fast and efficient Gemini",
+      icon: Zap,
+      category: "Google",
+    },
+    {
+      label: "Gemini",
+      value: "gemini-pro",
+      description: "Gemini Pro model",
+      icon: Brain,
+      category: "Google",
+    },
+    {
+      label: "Large",
+      value: "mistral-large",
+      description: "Mistral's largest model",
+      icon: Brain,
+      category: "Mistral",
+    },
+    {
+      label: "Medium",
+      value: "mistral-medium",
+      description: "Balanced performance",
+      icon: Zap,
+      category: "Mistral",
+    },
+    {
+      label: "Small",
+      value: "mistral-small",
+      description: "Fast and efficient",
+      icon: Zap,
+      category: "Mistral",
+    },
   ];
 
   const userMenuItems = [
@@ -56,10 +185,39 @@ export default function Header({
     setShowUserDropdown(!showUserDropdown);
   };
 
+  const handleModelDropdownToggle = (event) => {
+    const button = event.currentTarget;
+    const rect = button.getBoundingClientRect();
+    setModelDropdownPosition({
+      top: rect.bottom + 8,
+      left: rect.left,
+      width: rect.width,
+    });
+    setShowModelDropdown(!showModelDropdown);
+  };
+
+  const handleModelSelect = (modelValue) => {
+    if (typeof setSelectedModel === "function") {
+      setSelectedModel(modelValue); // This calls the parent's setSelectedModel function
+    } else {
+      console.error("setSelectedModel is not a function:", setSelectedModel);
+    }
+
+    setShowModelDropdown(false);
+  };
+
+  const getSelectedModel = () => {
+    const selected =
+      models.find((model) => model.value === selectedModel) || models[0];
+    return selected;
+  };
+
+  const selectedModelData = getSelectedModel();
+
   return (
     <>
       <div
-        className={`${isDarkMode ? "glass-dark border-gray-700/30" : "glass border-gray-200/30"} border-b border-b-purple-950 px-6 py-[7.5px] flex items-center backdrop-blur-md`}
+        className={`${isDarkMode ? "glass-dark border-gray-700/30" : "glass border-gray-200/30"} border-b border-b-purple-950 px-6 py-[7.5px] flex items-center backdrop-blur-md relative overflow-visible`}
       >
         {/* Left Section */}
         <div className="flex items-center gap-4 flex-1">
@@ -84,48 +242,36 @@ export default function Header({
 
         {/* Center Section - Model Dropdown */}
         <div className="flex items-center justify-center flex-1">
-          <div className="relative w-full max-w-[230px]">
-            {/* Custom arrow on the left */}
-            <div className="absolute inset-y-0 right-3 flex items-center pl-3 pointer-events-none">
-              <svg
-                className="w-4 h-4 text-purple-500"
-                fill="none"
-                stroke="currentColor"
-                strokeWidth="2"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M19 9l-7 7-7-7"
-                />
-              </svg>
-            </div>
-
-            <select
-              value={selectedModel}
-              onChange={(e) => setSelectedModel(e.target.value)}
-              className={`w-full pl-3 py-2 rounded-lg border outline-none shadow-sm transition-colors text-sm font-medium appearance-none
-        ${
-          isDarkMode
-            ? "bg-gray-900 border-purple-700 text-purple-200"
-            : "bg-white border-purple-300 text-purple-700"
-        }`}
+          <div className="relative w-full max-w-[370px]">
+            <button
+              onClick={handleModelDropdownToggle}
+              className={`w-full flex items-center justify-between px-4 py-3 rounded-lg border shadow-sm transition-all duration-200 text-sm font-medium group hover:shadow-md
+                ${
+                  isDarkMode
+                    ? "bg-gray-900 border-purple-900 text-purple-200 hover:border-purple-700 hover:bg-gray-800"
+                    : "bg-white border-purple-300 text-purple-700 hover:border-purple-500 hover:bg-purple-50"
+                }
+              `}
             >
-              {models.map((model) => (
-                <option
-                  key={model.value}
-                  value={model.value}
-                  className={
-                    isDarkMode
-                      ? "bg-gray-900 text-purple-200"
-                      : "bg-white text-purple-700"
-                  }
-                >
-                  {model.label}
-                </option>
-              ))}
-            </select>
+              <div className="flex items-center gap-3">
+                <selectedModelData.icon
+                  className={`w-4 h-4 ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
+                />
+                <div className="text-left">
+                  <div className="font-semibold">{selectedModelData.label}</div>
+                  <div
+                    className={`text-xs ${isDarkMode ? "text-gray-400" : "text-gray-500"}`}
+                  >
+                    {selectedModelData.category}
+                  </div>
+                </div>
+              </div>
+              <ChevronDown
+                className={`w-4 h-4 transition-transform duration-200 ${
+                  showModelDropdown ? "rotate-180" : ""
+                } ${isDarkMode ? "text-purple-400" : "text-purple-600"}`}
+              />
+            </button>
           </div>
         </div>
 
@@ -159,7 +305,107 @@ export default function Header({
         </div>
       </div>
 
-      {/* Dropdown Menu - Rendered at body level */}
+      {/* Model Dropdown Menu - Rendered at body level */}
+      {showModelDropdown && (
+        <div
+          style={{
+            position: "fixed",
+            top: modelDropdownPosition.top,
+            left: modelDropdownPosition.left,
+            width: modelDropdownPosition.width,
+            zIndex: 999999,
+          }}
+          className="pointer-events-auto"
+        >
+          <div
+            className={`rounded-lg shadow-2xl border max-h-96 overflow-hidden ${
+              isDarkMode
+                ? "bg-gray-900 border-gray-700 shadow-gray-900/50"
+                : "bg-white border-gray-200 shadow-gray-200/50"
+            }`}
+          >
+            {/* Scrollable container */}
+            <div
+              className="max-h-80 overflow-y-auto"
+              style={{
+                scrollbarWidth: "thin",
+                scrollbarColor: isDarkMode
+                  ? "#6b7280 #374151"
+                  : "#d1d5db #f3f4f6",
+              }}
+            >
+              <style jsx>{`
+                .overflow-y-auto::-webkit-scrollbar {
+                  width: 6px;
+                }
+                .overflow-y-auto::-webkit-scrollbar-track {
+                  background: ${isDarkMode ? "#374151" : "#f3f4f6"};
+                  border-radius: 3px;
+                }
+                .overflow-y-auto::-webkit-scrollbar-thumb {
+                  background: ${isDarkMode ? "#6b7280" : "#d1d5db"};
+                  border-radius: 3px;
+                }
+                .overflow-y-auto::-webkit-scrollbar-thumb:hover {
+                  background: ${isDarkMode ? "#9ca3af" : "#9ca3af"};
+                }
+              `}</style>
+              {models.map((model) => (
+                <button
+                  key={model.value}
+                  onClick={() => handleModelSelect(model.value)}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:transition-colors ${
+                    model.value === selectedModel
+                      ? isDarkMode
+                        ? "bg-purple-900/20 text-purple-200 border-l-2 border-purple-500"
+                        : "bg-purple-100 text-purple-700 border-l-2 border-purple-500"
+                      : isDarkMode
+                        ? "hover:bg-gray-800 text-gray-300"
+                        : "hover:bg-gray-50 text-gray-700"
+                  }`}
+                >
+                  <model.icon
+                    className={`w-4 h-4 ${
+                      model.value === selectedModel
+                        ? isDarkMode
+                          ? "text-purple-400"
+                          : "text-purple-600"
+                        : isDarkMode
+                          ? "text-gray-400"
+                          : "text-gray-500"
+                    }`}
+                  />
+                  <div className="flex-1">
+                    <div className="font-medium">{model.label}</div>
+                    <div
+                      className={`text-xs ${
+                        model.value === selectedModel
+                          ? isDarkMode
+                            ? "text-purple-300"
+                            : "text-purple-500"
+                          : isDarkMode
+                            ? "text-gray-400"
+                            : "text-gray-500"
+                      }`}
+                    >
+                      {model.description}
+                    </div>
+                  </div>
+                  {model.value === selectedModel && (
+                    <div
+                      className={`w-2 h-2 rounded-full ${
+                        isDarkMode ? "bg-purple-400" : "bg-purple-600"
+                      }`}
+                    />
+                  )}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* User Dropdown Menu - Rendered at body level */}
       {showUserDropdown && (
         <div
           style={{
@@ -188,11 +434,14 @@ export default function Header({
         </div>
       )}
 
-      {/* Click outside to close dropdown */}
-      {showUserDropdown && (
+      {/* Click outside to close dropdowns */}
+      {(showUserDropdown || showModelDropdown) && (
         <div
           className="fixed inset-0 z-[999998]"
-          onClick={() => setShowUserDropdown(false)}
+          onClick={() => {
+            setShowUserDropdown(false);
+            setShowModelDropdown(false);
+          }}
         />
       )}
     </>
