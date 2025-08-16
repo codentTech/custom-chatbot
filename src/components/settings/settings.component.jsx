@@ -2,17 +2,16 @@
 
 import {
   ArrowLeft,
-  Settings,
-  Sparkles,
-  ChevronRight,
-  Brain,
-  Zap,
-  Palette,
-  Shield,
   Bell,
-  CreditCard,
+  Brain,
+  ChevronRight,
   Code,
+  CreditCard,
   Database,
+  Palette,
+  Settings,
+  Shield,
+  Zap,
 } from "lucide-react";
 import Link from "next/link";
 import { useState } from "react";
@@ -108,39 +107,39 @@ export default function SettingsPage() {
   const ToggleSwitch = ({ enabled, onChange, disabled = false }) => (
     <button
       onClick={() => !disabled && onChange(!enabled)}
-      className={`relative w-12 h-6 rounded-full transition-all duration-200 ${
+      className={`relative w-10 h-5 rounded-full transition-all duration-200 ${
         enabled
-          ? "bg-gradient-to-r from-cyan-500 to-purple-600 shadow-lg"
-          : "bg-white/20"
+          ? "bg-gradient-to-r from-slate-500 to-slate-600 shadow-lg"
+          : "bg-slate-700/50"
       } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:shadow-md"}`}
     >
       <div
-        className={`absolute top-1 w-4 h-4 bg-white rounded-full transition-all duration-200 shadow-md ${
-          enabled ? "translate-x-7" : "translate-x-1"
+        className={`absolute top-0.5 w-4 h-4 bg-white rounded-full transition-all duration-200 shadow-md ${
+          enabled ? "translate-x-5" : "translate-x-0.5"
         }`}
       />
     </button>
   );
 
   const renderGeneralSettings = () => (
-    <div className="space-y-8 animate-fade-in">
+    <div className="space-y-4 animate-fade-in">
       <div>
-        <h3 className="text-2xl font-bold mb-2 text-white">
+        <h3 className="text-xl font-bold mb-2 text-white">
           General Preferences
         </h3>
-        <p className="text-sm text-gray-400 mb-8">
+        <p className="text-xs text-slate-400 mb-6">
           Configure your basic app settings and preferences
         </p>
 
-        <div className="space-y-6">
+        <div className="space-y-3">
           {/* Auto-save conversations */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 group hover:bg-white/15 transition-all duration-200">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-3 group hover:bg-white/20 transition-all duration-200">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <div className="font-semibold text-lg text-white mb-2">
+                <div className="font-semibold text-sm text-white mb-1">
                   Auto-save conversations
                 </div>
-                <div className="text-sm text-gray-400">
+                <div className="text-xs text-purple-300">
                   Automatically save your chat history to prevent data loss
                 </div>
               </div>
@@ -149,13 +148,13 @@ export default function SettingsPage() {
           </div>
 
           {/* Voice responses */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 group hover:bg-white/15 transition-all duration-200">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-3 group hover:bg-white/20 transition-all duration-200">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <div className="font-semibold text-lg text-white mb-2">
+                <div className="font-semibold text-sm text-white mb-1">
                   Voice responses
                 </div>
-                <div className="text-sm text-gray-400">
+                <div className="text-xs text-purple-300">
                   Enable text-to-speech for AI responses
                 </div>
               </div>
@@ -164,13 +163,13 @@ export default function SettingsPage() {
           </div>
 
           {/* Push notifications */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 group hover:bg-white/15 transition-all duration-200">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-3 group hover:bg-white/20 transition-all duration-200">
             <div className="flex items-center justify-between">
               <div className="flex-1">
-                <div className="font-semibold text-lg text-white mb-2">
+                <div className="font-semibold text-sm text-white mb-1">
                   Push notifications
                 </div>
-                <div className="text-sm text-gray-400">
+                <div className="text-xs text-purple-300">
                   Get notified of important updates and messages
                 </div>
               </div>
@@ -182,43 +181,26 @@ export default function SettingsPage() {
           </div>
 
           {/* Default Language */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 group hover:bg-white/15 transition-all duration-200">
-            <div className="mb-4">
-              <div className="font-semibold text-lg text-white mb-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-3 group hover:bg-white/20 transition-all duration-200">
+            <div className="mb-3">
+              <div className="font-semibold text-sm text-white mb-1">
                 Default Language
               </div>
-              <div className="text-sm text-gray-400">
+              <div className="text-xs text-purple-300">
                 Choose your preferred language for the interface
               </div>
             </div>
             <div className="relative w-full">
-              {/* Custom down arrow */}
-              <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
-                <svg
-                  className="w-4 h-4 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-
               <select
                 value={selectedLanguage}
                 onChange={(e) => setSelectedLanguage(e.target.value)}
-                className="w-full appearance-none bg-transparent text-white placeholder-gray-400 resize-none outline-none p-4 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm pr-10"
+                className="w-full appearance-none bg-slate-700/50 text-white text-xs p-2 rounded-lg border border-purple-700/30 focus:border-purple-500/50 focus:outline-none transition-colors"
               >
                 {languages.map((lang) => (
                   <option
                     key={lang}
                     value={lang}
-                    className="bg-gray-900 text-white"
+                    className="bg-slate-800 text-white"
                   >
                     {lang}
                   </option>
@@ -228,36 +210,36 @@ export default function SettingsPage() {
           </div>
 
           {/* Message Input Behavior */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 group hover:bg-white/15 transition-all duration-200">
-            <div className="mb-4">
-              <div className="font-semibold text-lg text-white mb-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-3 group hover:bg-white/20 transition-all duration-200">
+            <div className="mb-3">
+              <div className="font-semibold text-sm text-white mb-1">
                 Message send behavior
               </div>
-              <div className="text-sm text-gray-400 mb-4">
+              <div className="text-xs text-purple-300 mb-3">
                 Choose how to send messages
               </div>
             </div>
-            <div className="space-y-3">
-              <label className="flex items-center gap-3 cursor-pointer">
+            <div className="space-y-2">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="sendBehavior"
                   value="enter"
-                  className="w-4 h-4 text-purple-600 bg-transparent border-white/20 focus:ring-purple-500"
+                  className="w-3 h-3 text-purple-600 bg-transparent border-purple-500 focus:ring-purple-500"
                   defaultChecked
                 />
-                <span className="text-white">
+                <span className="text-xs text-white">
                   Enter to send, Shift+Enter for new line
                 </span>
               </label>
-              <label className="flex items-center gap-3 cursor-pointer">
+              <label className="flex items-center gap-2 cursor-pointer">
                 <input
                   type="radio"
                   name="sendBehavior"
                   value="ctrl-enter"
-                  className="w-4 h-4 text-purple-600 bg-transparent border-white/20 focus:ring-purple-500"
+                  className="w-3 h-3 text-purple-600 bg-transparent border-purple-500 focus:ring-purple-500"
                 />
-                <span className="text-white">
+                <span className="text-xs text-white">
                   Ctrl+Enter to send, Enter for new line
                 </span>
               </label>
@@ -265,49 +247,33 @@ export default function SettingsPage() {
           </div>
 
           {/* Conversation History */}
-          <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-6 group hover:bg-white/15 transition-all duration-200">
-            <div className="mb-4">
-              <div className="font-semibold text-lg text-white mb-2">
+          <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-3 group hover:bg-white/20 transition-all duration-200">
+            <div className="mb-3">
+              <div className="font-semibold text-sm text-white mb-1">
                 Conversation history limit
               </div>
-              <div className="text-sm text-gray-400 mb-4">
+              <div className="text-xs text-purple-300 mb-3">
                 Maximum number of conversations to keep
               </div>
             </div>
             <div className="relative w-full">
-              <div className="pointer-events-none absolute inset-y-0 right-4 flex items-center">
-                <svg
-                  className="w-4 h-4 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    d="M19 9l-7 7-7-7"
-                  />
-                </svg>
-              </div>
-
               <select
                 defaultValue="100"
-                className="w-full appearance-none bg-transparent text-white placeholder-gray-400 resize-none outline-none p-4 rounded-xl border border-white/20 bg-white/10 backdrop-blur-sm pr-10"
+                className="w-full appearance-none bg-slate-700/50 text-white text-xs p-2 rounded-lg border border-purple-700/30 focus:border-purple-500/50 focus:outline-none transition-colors"
               >
-                <option value="50" className="bg-gray-900 text-white">
+                <option value="50" className="bg-slate-800 text-white">
                   50 conversations
                 </option>
-                <option value="100" className="bg-gray-900 text-white">
+                <option value="100" className="bg-slate-800 text-white">
                   100 conversations
                 </option>
-                <option value="200" className="bg-gray-900 text-white">
+                <option value="200" className="bg-slate-800 text-white">
                   200 conversations
                 </option>
-                <option value="500" className="bg-gray-900 text-white">
+                <option value="500" className="bg-slate-800 text-white">
                   500 conversations
                 </option>
-                <option value="unlimited" className="bg-gray-900 text-white">
+                <option value="unlimited" className="bg-slate-800 text-white">
                   Unlimited
                 </option>
               </select>
@@ -319,8 +285,8 @@ export default function SettingsPage() {
   );
 
   return (
-    <div className="h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 text-white relative overflow-hidden">
-      {/* Animated Background Pattern - exactly like ChatArea */}
+    <div className="h-screen bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 text-white relative overflow-hidden">
+      {/* Animated Background Pattern - Same theme as sidebar */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none">
         <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse" />
@@ -331,65 +297,58 @@ export default function SettingsPage() {
       </div>
 
       <div className="relative z-10 h-full flex flex-col">
-        {/* Header - same as ChatArea input area style */}
-        <div className="p-6 bg-black/20 backdrop-blur-xl border-b border-white/10">
-          <div className="">
-            <div className="flex items-center gap-6">
-              <Link
-                href="/"
-                className="p-2 rounded-lg hover:bg-white/10 transition-colors text-white"
-              >
-                <ArrowLeft className="w-5 h-5" />
-              </Link>
-              <div className="flex items-center gap-4">
-                <div className="relative">
-                  <div className="w-10 h-10 bg-white/10 rounded-xl flex items-center justify-center border border-white/20">
-                    <Settings className="w-6 h-6 text-white" />
-                  </div>
-                  <div className="absolute -top-1 -right-1 w-4 h-4 bg-purple-600 rounded-full flex items-center justify-center">
-                    <Sparkles className="w-2 h-2 text-white" />
-                  </div>
-                </div>
-                <div>
-                  <h1 className="text-2xl font-bold text-white">Settings</h1>
-                  <p className="text-sm text-gray-400">
-                    Customize your NeuralFlow experience
-                  </p>
-                </div>
+        {/* Header - Compact design */}
+        <div className="p-4 bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 backdrop-blur-sm border-b border-white/20">
+          <div className="flex items-center gap-3">
+            <Link
+              href="/"
+              className="p-1.5 rounded hover:bg-white/10 transition-colors text-white"
+            >
+              <ArrowLeft className="w-3.5 h-3.5" />
+            </Link>
+            <div className="flex items-center gap-2">
+              <div className="w-6 h-6 bg-gradient-to-br from-slate-700 via-purple-600 to-slate-700 rounded flex items-center justify-center">
+                <Settings className="w-3 h-3 text-white" />
+              </div>
+              <div>
+                <h1 className="text-base font-bold text-white">Settings</h1>
+                <p className="text-xs text-purple-300">
+                  Customize your NeuralFlow experience
+                </p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="flex-1 flex overflow-hidden">
-          {/* Sidebar - same style as ChatArea cards */}
-          <div className="w-80 p-6 bg-black/20 backdrop-blur-xl border-r border-white/10">
-            <nav className="space-y-3">
+          {/* Sidebar - Compact design */}
+          <div className="w-64 p-4 bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 border-r border-purple-800/30">
+            <nav className="space-y-2">
               {settingSections.map((section) => (
                 <button
                   key={section.id}
                   onClick={() => setActiveSection(section.id)}
-                  className={`w-full flex items-center gap-4 px-4 py-4 rounded-2xl text-left transition-all ${
+                  className={`w-full flex items-center gap-3 px-3 py-2 rounded-lg text-left transition-all ${
                     activeSection === section.id
-                      ? "bg-white/20 backdrop-blur-sm border border-white/30 text-white shadow-lg"
-                      : "hover:bg-white/10 border border-transparent text-gray-300"
+                      ? "bg-purple-800/30 border border-purple-700/50 text-white shadow-md"
+                      : "hover:bg-purple-800/20 border border-transparent text-purple-300"
                   }`}
                 >
                   <div
-                    className={`p-2 rounded-lg ${
+                    className={`p-1.5 rounded-md ${
                       activeSection === section.id
-                        ? "bg-white/20 text-white"
-                        : "bg-white/10 text-gray-400"
+                        ? "bg-purple-700/40 text-white"
+                        : "bg-slate-700/50 text-purple-400"
                     }`}
                   >
-                    <section.icon className="w-5 h-5" />
+                    <section.icon className="w-4 h-4" />
                   </div>
                   <div className="flex-1">
                     <div
-                      className={`font-semibold text-sm ${
+                      className={`font-semibold text-xs ${
                         activeSection === section.id
                           ? "text-white"
-                          : "text-gray-300"
+                          : "text-purple-300"
                       }`}
                     >
                       {section.name}
@@ -397,42 +356,42 @@ export default function SettingsPage() {
                     <div
                       className={`text-xs ${
                         activeSection === section.id
-                          ? "text-gray-300"
-                          : "text-gray-400"
+                          ? "text-purple-200"
+                          : "text-purple-400"
                       }`}
                     >
                       {section.description}
                     </div>
                   </div>
-                  <ChevronRight
-                    className={`w-4 h-4 transition-transform ${
-                      activeSection === section.id
-                        ? "rotate-90 text-white"
-                        : "text-gray-500"
+                  <div
+                    className={`w-3 h-3 transition-transform ${
+                      activeSection === section.id ? "rotate-90" : ""
                     }`}
-                  />
+                  >
+                    <ChevronRight className="w-3 h-3 text-purple-400" />
+                  </div>
                 </button>
               ))}
             </nav>
           </div>
 
           {/* Main Content */}
-          <div className="flex-1 overflow-y-auto">
-            <div className="px-6 py-8">
+          <div className="flex-1 overflow-y-auto custom-scrollbar">
+            <div className="px-6 py-6">
               {activeSection === "general" && renderGeneralSettings()}
 
               {/* Placeholder for other sections */}
               {activeSection !== "general" && (
-                <div className="bg-white/10 backdrop-blur-sm rounded-2xl border border-white/20 p-12 text-center">
-                  <div className="mb-6">
-                    <div className="w-16 h-16 bg-white/10 border border-white/20 rounded-2xl flex items-center justify-center mx-auto">
-                      <Settings className="w-8 h-8 text-white" />
+                <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-8 text-center">
+                  <div className="mb-4">
+                    <div className="w-12 h-12 bg-white/10 border border-white/20 rounded-xl flex items-center justify-center mx-auto">
+                      <Settings className="w-6 h-6 text-white" />
                     </div>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3 text-white">
+                  <h3 className="text-lg font-semibold mb-2 text-white">
                     Coming Soon
                   </h3>
-                  <p className="text-gray-400">
+                  <p className="text-white text-sm">
                     This section will be implemented soon.
                   </p>
                 </div>

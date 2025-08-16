@@ -2,100 +2,35 @@
 
 import { Menu } from "lucide-react";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Sidebar from "../components/sidebar/sidebar.component";
-import ChatArea from "../components/chat-area/chat-area.component";
+import Header from "../components/header/header.component";
+import { conversations } from "../data/conversations";
 
 // Main Component
 export default function AIChatbotUI() {
+  const router = useRouter();
   const [message, setMessage] = useState("");
   const [isRecording, setIsRecording] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedConversation, setSelectedConversation] = useState(1);
+  const [isNewChat, setIsNewChat] = useState(false);
+  const [selectedModel, setSelectedModel] = useState("gpt-4o");
 
-  const conversations = [
-    {
-      id: 1,
-      title: "Mobile App UX Design",
-      time: "2m ago",
-      preview: "Help me create a roadmap...",
-      starred: true,
-      unread: 2,
-    },
-    {
-      id: 2,
-      title: "React Code Review",
-      time: "1h ago",
-      preview: "Can you review this component...",
-      starred: false,
-      unread: 0,
-    },
-    {
-      id: 3,
-      title: "Creative Writing Helper",
-      time: "3h ago",
-      preview: "Character development ideas...",
-      starred: true,
-      unread: 1,
-    },
-    {
-      id: 4,
-      title: "Math Problem Solver",
-      time: "1d ago",
-      preview: "Solve this calculus equation...",
-      starred: false,
-      unread: 0,
-    },
-    {
-      id: 5,
-      title: "Travel Planning",
-      time: "2d ago",
-      preview: "Plan a 7-day trip to Japan...",
-      starred: false,
-      unread: 0,
-    },
-    {
-      id: 6,
-      title: "Business Strategy",
-      time: "3d ago",
-      preview: "Market analysis discussion...",
-      starred: false,
-      unread: 0,
-    },
-    {
-      id: 7,
-      title: "Learning Python",
-      time: "1w ago",
-      preview: "Best practices for beginners...",
-      starred: true,
-      unread: 0,
-    },
-    {
-      id: 8,
-      title: "Travel Planning",
-      time: "2d ago",
-      preview: "Plan a 7-day trip to Japan...",
-      starred: false,
-      unread: 0,
-    },
-    {
-      id: 9,
-      title: "Business Strategy",
-      time: "3d ago",
-      preview: "Market analysis discussion...",
-      starred: false,
-      unread: 0,
-    },
-    {
-      id: 10,
-      title: "Learning Python",
-      time: "1w ago",
-      preview: "Best practices for beginners...",
-      starred: true,
-      unread: 0,
-    },
-  ];
+  const handleNewChat = () => {
+    setIsNewChat(true);
+    setMessage("");
+  };
+
+  const handleStartChat = (newMessage) => {
+    if (newMessage.trim()) {
+      const newChatId = Date.now();
+      // Navigate to the new chat route
+      router.push(`/chat/${newChatId}`);
+    }
+  };
 
   const chatMessages = [
     {
@@ -128,9 +63,7 @@ export default function AIChatbotUI() {
     },
   ];
 
-  const baseClasses = isDarkMode
-    ? "h-screen bg-gradient-to-b from-slate-900 via-purple-900 to-slate-900 text-white"
-    : "h-screen bg-gradient-to-b from-slate-100 via-purple-100 to-slate-100 text-slate-900";
+  const baseClasses = "h-screen text-white";
 
   return (
     <div className={`${baseClasses} overflow-hidden flex relative`}>
@@ -159,19 +92,126 @@ export default function AIChatbotUI() {
         selectedConversation={selectedConversation}
         setSelectedConversation={setSelectedConversation}
         conversations={conversations}
+        isNewChat={isNewChat}
+        handleNewChat={handleNewChat}
       />
 
-      {/* Chat Area Component */}
-      <ChatArea
-        isDarkMode={isDarkMode}
-        chatMessages={chatMessages}
-        message={message}
-        setMessage={setMessage}
-        isRecording={isRecording}
-        setIsRecording={setIsRecording}
-        sidebarOpen={sidebarOpen}
-        setSidebarOpen={setSidebarOpen}
-      />
+      {/* Main Content Area */}
+      <div className="flex-1 flex flex-col relative">
+        {/* Header Component */}
+        <Header
+          selectedModel={selectedModel}
+          setSelectedModel={setSelectedModel}
+        />
+
+        {/* New Chat Interface */}
+        <div className="flex-1 flex flex-col items-center justify-center">
+          {/* Eye-catching New Chat Header */}
+          <div className="text-center mb-8 px-4">
+            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-purple-600/20 to-purple-800/30 rounded-2xl flex items-center justify-center border border-purple-600/30 backdrop-blur-sm shadow-lg">
+              <div className="w-10 h-10 bg-gradient-to-br from-purple-500 to-purple-600 rounded-xl flex items-center justify-center shadow-inner">
+                <svg
+                  className="w-5 h-5 text-white"
+                  fill="none"
+                  stroke="currentColor"
+                  viewBox="0 0 24 24"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                  />
+                </svg>
+              </div>
+            </div>
+            <h1 className="text-3xl sm:text-4xl font-bold text-white mb-3 bg-gradient-to-r from-white via-purple-200 to-purple-300 bg-clip-text text-transparent">
+              Start a New Conversation
+            </h1>
+            <p className="text-purple-300 text-base sm:text-lg max-w-md mx-auto leading-relaxed">
+              Ask me anything - I'm here to help with coding, design, writing,
+              research, and much more.
+            </p>
+          </div>
+
+          {/* Chat Input Area */}
+          <div className="w-full max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-4">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl border border-white/20 p-2.5 sm:p-3">
+              <div className="flex items-end gap-2 sm:gap-3">
+                <div className="flex-1">
+                  <textarea
+                    value={message}
+                    onChange={(e) => setMessage(e.target.value)}
+                    placeholder="Ask me anything... I'm here to help!"
+                    className="w-full bg-transparent text-white placeholder-gray-400 resize-none outline-none max-h-24 text-xs sm:text-sm"
+                    rows="1"
+                    onInput={(e) => {
+                      e.target.style.height = "auto";
+                      e.target.style.height = e.target.scrollHeight + "px";
+                    }}
+                  />
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-0">
+                {/* Quick Actions */}
+                <div className="flex flex-wrap gap-1.5 sm:gap-2 mt-2 sm:mt-3">
+                  <button className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/10 hover:bg-white/20 rounded-full text-xs transition-colors">
+                    ✨ Explain this code
+                  </button>
+                  <button className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/10 hover:bg-white/20 rounded-full text-xs transition-colors">
+                    🎨 Design ideas
+                  </button>
+                  <button className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/10 hover:bg-white/20 rounded-full text-xs transition-colors">
+                    📝 Write content
+                  </button>
+                  <button className="px-1.5 sm:px-2 py-0.5 sm:py-1 bg-white/10 hover:bg-white/20 rounded-full text-xs transition-colors">
+                    🔍 Research topic
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-1.5 sm:gap-2">
+                  <button className="p-1.5 sm:p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
+                    <svg
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M19 14l-7 7m0 0l-7-7m7 7V3"
+                      />
+                    </svg>
+                  </button>
+                  <button
+                    onClick={() => handleStartChat(message)}
+                    disabled={!message.trim()}
+                    className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-purple-800/50 disabled:to-purple-900/50 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 flex items-center gap-1.5 sm:gap-2 font-medium text-xs sm:text-sm"
+                  >
+                    <svg
+                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                      fill="none"
+                      stroke="currentColor"
+                      viewBox="0 0 24 24"
+                    >
+                      <path
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        strokeWidth={2}
+                        d="M12 19l9 2-9-18-9 18 9-2zm0 0v8"
+                      />
+                    </svg>
+                    Start Chat
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
 
       {/* Mobile Overlay */}
       {sidebarOpen && (
@@ -184,10 +224,10 @@ export default function AIChatbotUI() {
       {/* Mobile Menu Button */}
       <button
         onClick={() => setSidebarOpen(true)}
-        className={`lg:hidden fixed top-4 left-4 z-40 p-2.5 ${isDarkMode ? "bg-slate-800/90 hover:bg-slate-700/90 border-purple-700/50" : "bg-white/90 hover:bg-purple-50/90 border-purple-200"} border rounded-xl backdrop-blur-md transition-all duration-200 ${isDarkMode ? "text-purple-300" : "text-purple-600"} shadow-lg`}
+        className={`lg:hidden fixed top-3 left-3 z-40 p-2 ${isDarkMode ? "bg-slate-800/90 hover:bg-slate-700/90 border-purple-700/50" : "bg-white/90 hover:bg-purple-50/90 border-purple-200"} border rounded-lg backdrop-blur-md transition-all duration-200 ${isDarkMode ? "text-purple-300" : "text-purple-600"} shadow-lg`}
         aria-label="Open menu"
       >
-        <Menu size={18} />
+        <Menu size={16} />
       </button>
     </div>
   );

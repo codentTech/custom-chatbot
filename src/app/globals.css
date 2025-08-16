@@ -1,7 +1,42 @@
-@import "tailwindcss";
-@import url("/public/assets/fonts/DMSans-Bold.ttf");
-@import url("/public/assets/fonts/DMSans-Medium.ttf");
-@import url("/public/assets/fonts/DMSans-ExtraBold.ttf");
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* DM Sans Font Family */
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-Regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-SemiBold.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-Bold.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "DM Sans";
+  src: url("/fonts/DMSans-ExtraBold.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
 
 :root {
   --background: #ffffff;
@@ -26,4 +61,64 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: "DM Sans", Arial, Helvetica, sans-serif;
+}
+
+/* Custom Scrollbar Styles - Dark Purple Theme */
+::-webkit-scrollbar {
+  width: 24px;
+  height: 24px;
+}
+
+::-webkit-scrollbar-track {
+  background: #0f0f23;
+  border-radius: 12px;
+  border: 2px solid #2d2d5a;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #7c3aed, #9333ea, #a855f7);
+  border-radius: 12px;
+  border: 3px solid #0f0f23;
+  box-shadow: 0 4px 12px rgba(124, 58, 237, 0.3);
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #9333ea, #a855f7, #c084fc);
+  box-shadow: 0 6px 16px rgba(124, 58, 237, 0.5);
+  transform: scale(1.02);
+}
+
+::-webkit-scrollbar-corner {
+  background: #0f0f23;
+}
+
+/* Firefox Scrollbar Styles */
+* {
+  scrollbar-width: thick;
+  scrollbar-color: #7c3aed #0f0f23;
+}
+
+/* Custom Scrollbar for specific elements - Extra Thick */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 32px;
+  height: 32px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: #0f0f23;
+  border-radius: 16px;
+  border: 3px solid #2d2d5a;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, #7c3aed, #9333ea, #a855f7);
+  border-radius: 16px;
+  border: 4px solid #0f0f23;
+  box-shadow: 0 6px 20px rgba(124, 58, 237, 0.4);
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, #9333ea, #a855f7, #c084fc);
+  box-shadow: 0 8px 24px rgba(124, 58, 237, 0.6);
+  transform: scale(1.05);
 }

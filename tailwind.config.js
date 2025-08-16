@@ -47,6 +47,18 @@ const themeColors = {
     950: "#3B0764",
   },
 
+  // NeuralFlow Theme Colors
+  neural: {
+    bg: "#0F0F23", // Very dark purple-black
+    bgSecondary: "#1A1A2E", // Darker purple
+    bgTertiary: "#16213E", // Dark blue-purple
+    accent: "#7C3AED", // Purple accent
+    accentHover: "#9333EA", // Purple hover
+    text: "#FFFFFF", // White text
+    textSecondary: "#E2E8F0", // Light gray text
+    border: "#2D2D5A", // Dark purple border
+  },
+
   // Neutral grays with warm undertones
   neutral: {
     50: "#FAFAFA",
@@ -364,6 +376,22 @@ module.exports = {
 
         ".gradient-text": {
           "@apply bg-gradient-to-r from-primary-500 to-indigo-500 bg-clip-text text-transparent":
+            {},
+        },
+
+        // NeuralFlow Theme Backgrounds
+        ".bg-neural": {
+          "@apply bg-gradient-to-b from-neural-bg via-neural-bgSecondary to-neural-bgTertiary":
+            {},
+        },
+
+        ".bg-neural-chat": {
+          "@apply bg-gradient-to-b from-neural-bg via-neural-bgSecondary to-neural-bg":
+            {},
+        },
+
+        ".bg-neural-input": {
+          "@apply bg-neural-bgSecondary/50 backdrop-blur-sm border border-neural-border/30":
             {},
         },
       });

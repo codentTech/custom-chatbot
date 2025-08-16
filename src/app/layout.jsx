@@ -2,8 +2,8 @@
 
 import FullPageLoader from "@/common/components/full-page-loader/full-page-loader.component";
 import "@/common/styles/dashboard/dashboard.style.css";
-import "@/common/styles/globals.style.css";
 import "@/common/styles/home.style.scss";
+import "./globals.css";
 import { persistor, store } from "@/provider/store";
 import styled from "@emotion/styled";
 import { StyledEngineProvider } from "@mui/material";
@@ -46,10 +46,9 @@ function LayoutWrapper({ children }) {
     <>
       {loading && <FullPageLoader />}
       <React.Fragment>
-        {/* {!loading && <Header />} */}
-        <div className="bg-white">{children}</div>
-        {/* <div className="pt-52 lg:pt-40">{children}</div> */}
-        {/* {!loading && <Footer />} */}
+        <div className="bg-gradient-to-b from-slate-950 via-slate-900 to-slate-950 min-h-screen">
+          {children}
+        </div>
       </React.Fragment>
     </>
   );
