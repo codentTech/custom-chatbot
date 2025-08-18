@@ -1,28 +1,31 @@
 "use client";
 
-import { useState } from "react";
-import { Menu } from "lucide-react";
-import Header from "../header/header.component";
-import Sidebar from "../sidebar/sidebar.component";
-import { conversations } from "../../data/conversations";
+import React, { useState } from "react";
+import Header from "@/components/header/header.component";
+import Sidebar from "@/components/sidebar/sidebar.component";
+import { conversations } from "@/data/conversations";
 
-export default function ChatbotLayout({ children, title = "Chatbots" }) {
+export default function ChatbotLayout({
+  children,
+  title = "Chatbots",
+  searchQuery: propSearchQuery = "",
+  setSearchQuery: propSetSearchQuery = () => {},
+  showSearch = false,
+}) {
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [searchQuery, setSearchQuery] = useState("");
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [isDarkMode, setIsDarkMode] = useState(true);
   const [selectedModel, setSelectedModel] = useState("gpt-4o");
 
   const handleNewChat = () => {
     // Navigate to new chat
-    console.log("New chat clicked");
   };
 
   return (
-    <div className="h-screen bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 text-white relative overflow-hidden">
+    <div className="h-screen text-white relative bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90 overflow-hidden">
       {/* Animated Background Pattern */}
       <div className="fixed inset-0 overflow-hidden pointer-events-none z-0">
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/90 via-purple-900/40 to-slate-900/90" />
+        <div className="absolute inset-0" />
         <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-purple-500/5 rounded-full blur-3xl animate-pulse" />
         <div
           className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-slate-500/5 rounded-full blur-3xl animate-pulse"
@@ -30,15 +33,13 @@ export default function ChatbotLayout({ children, title = "Chatbots" }) {
         />
       </div>
 
-      <div className="relative z-10 h-full flex">
+      <div className="relative z-10 h-full flex overflow-hidden">
         {/* Sidebar */}
         <Sidebar
           isDarkMode={isDarkMode}
           setIsDarkMode={setIsDarkMode}
           sidebarOpen={sidebarOpen}
           setSidebarOpen={setSidebarOpen}
-          searchQuery={searchQuery}
-          setSearchQuery={setSearchQuery}
           selectedConversation={selectedConversation}
           setSelectedConversation={setSelectedConversation}
           conversations={conversations}
@@ -47,17 +48,21 @@ export default function ChatbotLayout({ children, title = "Chatbots" }) {
         />
 
         {/* Main Content Area */}
-        <div className="flex-1 flex flex-col">
+        <div className="flex-1 flex flex-col overflow-hidden min-w-0">
           {/* Header */}
           <Header
             selectedModel={selectedModel}
             setSelectedModel={setSelectedModel}
             sidebarOpen={sidebarOpen}
             setSidebarOpen={setSidebarOpen}
+            searchQuery={propSearchQuery}
+            setSearchQuery={propSetSearchQuery}
+            searchPlaceholder="Search conversations..."
+            showSearch={showSearch}
           />
 
           {/* Main Content */}
-          <div className="flex-1 overflow-hidden">{children}</div>
+          <div className="flex-1 overflow-hidden min-w-0">{children}</div>
         </div>
       </div>
 
@@ -67,16 +72,6 @@ export default function ChatbotLayout({ children, title = "Chatbots" }) {
           className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-20"
           onClick={() => setSidebarOpen(false)}
         />
-      )}
-
-      {/* Mobile Menu Button - Only show when sidebar is closed */}
-      {!sidebarOpen && (
-        <button
-          onClick={() => setSidebarOpen(true)}
-          className="lg:hidden fixed top-3 left-3 z-40 p-2 bg-slate-800/90 hover:bg-slate-700/90 border border-purple-700/50 rounded-lg text-white backdrop-blur-md transition-all duration-200"
-        >
-          <Menu size={16} />
-        </button>
       )}
     </div>
   );

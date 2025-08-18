@@ -14,15 +14,8 @@ function FullPageLoader() {
       </div>
 
       <div className="text-center relative z-10">
-        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-800 via-slate-700 to-slate-800 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 animate-pulse shadow-2xl shadow-slate-500/25 border border-slate-600/30">
+        <div className="w-16 h-16 sm:w-20 sm:h-20 bg-gradient-to-br from-slate-700 via-purple-600 to-slate-700 rounded-2xl flex items-center justify-center mx-auto mb-4 sm:mb-6 animate-pulse shadow-2xl shadow-slate-500/25 border border-slate-600/30">
           <Brain className="w-8 h-8 sm:w-10 sm:h-10 text-white" />
-        </div>
-        <h1 className="text-2xl sm:text-3xl font-bold text-white mb-3 font-['DM_Sans']">
-          NeuralFlow
-        </h1>
-
-        <div className="w-32 sm:w-40 h-2 sm:h-2.5 bg-slate-800/50 rounded-full overflow-hidden border border-slate-600/30">
-          <div className="w-full h-full bg-gradient-to-r from-slate-500 via-slate-400 to-slate-500 rounded-full animate-pulse shadow-lg"></div>
         </div>
       </div>
     </div>

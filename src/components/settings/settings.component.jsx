@@ -109,8 +109,8 @@ export default function SettingsPage() {
       onClick={() => !disabled && onChange(!enabled)}
       className={`relative w-10 h-5 rounded-full transition-all duration-200 ${
         enabled
-          ? "bg-gradient-to-r from-slate-500 to-slate-600 shadow-lg"
-          : "bg-slate-700/50"
+          ? "bg-gradient-to-r from-purple-500 to-purple-600 shadow-lg shadow-purple-500/25"
+          : "bg-slate-600/50 border border-slate-500/30"
       } ${disabled ? "opacity-50 cursor-not-allowed" : "cursor-pointer hover:shadow-md"}`}
     >
       <div

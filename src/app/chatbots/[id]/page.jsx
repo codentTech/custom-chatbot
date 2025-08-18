@@ -2,14 +2,15 @@
 
 import { useState, useEffect } from "react";
 import { useParams, useRouter } from "next/navigation";
-import ChatbotLayout from "../../../components/layout/chatbot-layout.component";
-import ChatbotConversations from "../../../components/chatbot-conversations/chatbot-conversations.component";
+import ChatbotLayout from "@/common/layouts/chatbot-layout.component";    
+import ChatbotConversations from "@/components/chatbot-conversations/chatbot-conversations.component";
 
 export default function ChatbotPage() {
   const params = useParams();
   const router = useRouter();
   const [chatbot, setChatbot] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
 
   // Sample chatbots data - this would come from your backend
   const chatbots = [
@@ -88,7 +89,6 @@ export default function ChatbotPage() {
 
   const handleNewConversation = (newConversation) => {
     // Handle new conversation creation
-    console.log("New conversation created:", newConversation);
     // Navigate to the new conversation
     router.push(`/chat/${newConversation.id}`);
   };
@@ -113,11 +113,17 @@ export default function ChatbotPage() {
   }
 
   return (
-    <ChatbotLayout title={chatbot.name}>
+    <ChatbotLayout
+      title={chatbot.name}
+      searchQuery={searchQuery}
+      setSearchQuery={setSearchQuery}
+      showSearch={true}
+    >
       <ChatbotConversations
         chatbot={chatbot}
         onBackToChatbots={handleBackToChatbots}
         onNewConversation={handleNewConversation}
+        searchQuery={searchQuery}
       />
     </ChatbotLayout>
   );

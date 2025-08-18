@@ -4,15 +4,13 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import {
   Archive,
-  Bot,
   Brain,
   ChevronLeft,
   ChevronRight,
-  Edit3,
+  Edit,
   MessageSquare,
   MoreVertical,
   Plus,
-  Search,
   Settings,
   Share2,
   Star,
@@ -22,8 +20,6 @@ import {
 function Sidebar({
   sidebarOpen = true,
   setSidebarOpen = () => {},
-  searchQuery = "",
-  setSearchQuery = () => {},
   selectedConversation = 1,
   setSelectedConversation = () => {},
   conversations = [],
@@ -33,7 +29,6 @@ function Sidebar({
   const [collapsed, setCollapsed] = useState(false);
   const [hoveredConv, setHoveredConv] = useState(null);
   const [showContextMenu, setShowContextMenu] = useState(null);
-  const [activeSection, setActiveSection] = useState("chats");
 
   const toggleSidebar = () => {
     setCollapsed(!collapsed);
@@ -61,25 +56,6 @@ function Sidebar({
     }
     router.push(`/chat/${convId}`);
   };
-
-  const filteredConversations = conversations.filter((conv) =>
-    conv.title.toLowerCase().includes(searchQuery.toLowerCase())
-  );
-
-  const navigationItems = [
-    {
-      id: "projects",
-      label: "Chatbots",
-      icon: Bot,
-      count: 3,
-    },
-    {
-      id: "favorites",
-      label: "Favorites",
-      icon: Star,
-      count: 3,
-    },
-  ];
 
   return (
     <>
@@ -118,7 +94,7 @@ function Sidebar({
                 <Brain className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-white" />
               </div>
               <span className="font-semibold text-white text-xs sm:text-sm">
-                NeuralFlow
+                Chatbot
               </span>
             </div>
           )}
@@ -163,22 +139,6 @@ function Sidebar({
           )}
         </div>
 
-        {/* Search - Only show when not collapsed */}
-        {!collapsed && (
-          <div className="px-2.5 sm:px-3 pb-3 flex-shrink-0">
-            <div className="relative">
-              <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-400 z-10" />
-              <input
-                type="text"
-                placeholder="Search conversations..."
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full pl-10 pr-3 py-1.5 bg-slate-800/50 border-purple-700/50 text-white placeholder-purple-400 border rounded-lg text-xs outline-none transition-all"
-              />
-            </div>
-          </div>
-        )}
-
         {/* Chatbots Section - Only show when not collapsed */}
         {!collapsed && (
           <div className="px-2.5 sm:px-3 pb-3 flex-shrink-0">
@@ -186,13 +146,6 @@ function Sidebar({
               <h3 className="text-xs font-semibold text-purple-300 uppercase tracking-wider">
                 Chatbots
               </h3>
-              <button
-                onClick={() => handleChatbotClick("/chatbots")}
-                className="p-1 hover:bg-white/10 rounded transition-colors text-purple-400 hover:text-white"
-                title="Manage chatbots"
-              >
-                <Plus className="w-3 h-3" />
-              </button>
             </div>
 
             {/* Quick Chatbot Access */}
@@ -251,142 +204,175 @@ function Sidebar({
           </div>
         )}
 
+        {/* Favorites Section - Only show when not collapsed */}
+        {!collapsed && (
+          <div className="px-2.5 sm:px-3 pb-3 flex-shrink-0">
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                Favorites
+              </h3>
+            </div>
+
+            {/* Favorites List */}
+            <div className="space-y-1">
+              {conversations
+                .filter((conv) => conv.starred)
+                .slice(0, 5)
+                .map((conv) => (
+                  <button
+                    key={conv.id}
+                    onClick={() => handleConversationClick(conv.id)}
+                    className="w-full flex items-center justify-between px-2 py-1 hover:bg-white/10 rounded transition-colors text-left group"
+                  >
+                    <span className="text-white text-xs font-medium truncate">
+                      {conv.title}
+                    </span>
+                    <Star className="w-3 h-3 text-yellow-400 fill-current flex-shrink-0" />
+                  </button>
+                ))}
+            </div>
+
+            <button className="w-full mt-1.5 px-2 py-1 text-xs text-purple-300 hover:text-white hover:bg-white/10 rounded transition-colors font-medium">
+              View All →
+            </button>
+          </div>
+        )}
+
         {/* Divider */}
         <hr className="border-t border-purple-600/50 mx-2.5 sm:mx-3 mb-3 flex-shrink-0" />
 
         {/* Conversations */}
         <div className="flex-1 overflow-y-auto px-1.5 min-h-0 custom-scrollbar">
+          <div className="flex items-center justify-between mb-2">
+            <h3 className="text-xs font-semibold text-purple-300 uppercase tracking-wider">
+              Recent Conversations
+            </h3>
+          </div>
           <div className="space-y-0.5">
-            {filteredConversations.map((conv) => (
-              <div
-                key={conv.id}
-                className="relative group"
-                onMouseEnter={() => setHoveredConv(conv.id)}
-                onMouseLeave={() => setHoveredConv(null)}
-              >
-                <button
-                  onClick={() => handleConversationClick(conv.id)}
-                  className={`w-full flex items-center px-2 py-0.5 rounded transition-all duration-200 ${
-                    selectedConversation === conv.id
-                      ? "bg-gradient-to-r from-purple-800/40 via-purple-700/50 to-purple-800/40 shadow-lg border border-purple-600/30"
-                      : "hover:bg-purple-800/20 hover:shadow-md"
-                  }`}
+            {conversations
+              .filter((conv) => !conv.starred)
+              .map((conv) => (
+                <div
+                  key={conv.id}
+                  className="relative group"
+                  onMouseEnter={() => setHoveredConv(conv.id)}
+                  onMouseLeave={() => setHoveredConv(null)}
                 >
-                  {collapsed ? (
-                    // Collapsed view - just icon
-                    <div className="w-full flex justify-center">
-                      <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />
-                    </div>
-                  ) : (
-                    // Expanded view
-                    <div className="flex items-center justify-between w-full min-w-0">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-1">
-                          <span
-                            className={`font-medium text-xs truncate ${
-                              selectedConversation === conv.id
-                                ? "text-white"
-                                : "text-purple-100"
-                            }`}
+                  <button
+                    onClick={() => handleConversationClick(conv.id)}
+                    className={`w-full flex items-center px-2 py-0.5 rounded transition-all duration-200 ${
+                      selectedConversation === conv.id
+                        ? "bg-gradient-to-r from-purple-800/40 via-purple-700/50 to-purple-800/40 shadow-lg border border-purple-600/30"
+                        : "hover:bg-purple-800/20 hover:shadow-md"
+                    }`}
+                  >
+                    {collapsed ? (
+                      // Collapsed view - just icon
+                      <div className="w-full flex justify-center">
+                        <MessageSquare className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />
+                      </div>
+                    ) : (
+                      // Expanded view
+                      <div className="flex items-center justify-between w-full min-w-0">
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center gap-1">
+                            <span
+                              className={`font-medium text-xs truncate ${
+                                selectedConversation === conv.id
+                                  ? "text-white"
+                                  : "text-purple-100"
+                              }`}
+                            >
+                              {conv.title}
+                            </span>
+                            {conv.starred && (
+                              <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-yellow-400 fill-current flex-shrink-0" />
+                            )}
+                          </div>
+                        </div>
+
+                        <div
+                          className={`flex items-center gap-1 transition-opacity flex-shrink-0 ${
+                            showContextMenu === conv.id
+                              ? "opacity-100"
+                              : "opacity-0 group-hover:opacity-100"
+                          }`}
+                        >
+                          <div
+                            onClick={(e) => handleContextMenu(e, conv.id)}
+                            className="p-1 hover:bg-purple-700/40 rounded-md transition-colors cursor-pointer"
+                            title="More options"
                           >
-                            {conv.title}
-                          </span>
-                          {conv.starred && (
-                            <Star className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-yellow-400 fill-current flex-shrink-0" />
-                          )}
+                            <MoreVertical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />
+                          </div>
                         </div>
                       </div>
+                    )}
+                  </button>
 
-                      <div
-                        className={`flex items-center gap-1 transition-opacity flex-shrink-0 ${
-                          showContextMenu === conv.id
-                            ? "opacity-100"
-                            : "opacity-0 group-hover:opacity-100"
-                        }`}
+                  {/* Context Menu */}
+                  {showContextMenu === conv.id && !collapsed && (
+                    <div className="absolute right-2 top-8 bg-slate-800/95 border-purple-700/50 backdrop-blur-md border rounded-lg shadow-xl z-20 min-w-32 sm:min-w-36 py-1">
+                      <button
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
+                        onClick={() => setShowContextMenu(null)}
                       >
-                        <div
-                          onClick={(e) => handleContextMenu(e, conv.id)}
-                          className="p-1 hover:bg-purple-700/40 rounded-md transition-colors cursor-pointer"
-                          title="More options"
-                        >
-                          <MoreVertical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />
-                        </div>
+                        <Edit className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                        Rename
+                      </button>
+
+                      <button
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
+                        onClick={() => setShowContextMenu(null)}
+                      >
+                        <Share2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                        Share
+                      </button>
+                      <button
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
+                        onClick={() => setShowContextMenu(null)}
+                      >
+                        <Archive className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                        Archive
+                      </button>
+
+                      <button
+                        className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-red-900/30 transition-colors text-red-400"
+                        onClick={() => setShowContextMenu(null)}
+                      >
+                        <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
+                        Delete
+                      </button>
+                    </div>
+                  )}
+
+                  {/* Tooltip for collapsed state */}
+                  {collapsed && hoveredConv === conv.id && (
+                    <div className="absolute left-16 top-1/2 transform -translate-y-1/2 bg-slate-800/95 text-white border-purple-700/50 px-2 py-1.5 rounded-lg shadow-lg z-50 min-w-48 sm:min-w-56 border pointer-events-none backdrop-blur-md">
+                      <div className="flex items-center gap-2 mb-1">
+                        <span className="font-medium text-xs">
+                          {conv.title}
+                        </span>
+                        {conv.starred && (
+                          <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-400 rounded-sm"></div>
+                        )}
+                      </div>
+                      <div className="text-xs text-purple-300">{conv.time}</div>
+                      <div className="text-xs text-purple-400 mt-1">
+                        {conv.preview}
                       </div>
                     </div>
                   )}
-                </button>
-
-                {/* Context Menu */}
-                {showContextMenu === conv.id && !collapsed && (
-                  <div className="absolute right-2 top-8 bg-slate-800/95 border-purple-700/50 backdrop-blur-md border rounded-lg shadow-xl z-20 min-w-32 sm:min-w-36 py-1">
-                    <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
-                      onClick={() => setShowContextMenu(null)}
-                    >
-                      <Edit3 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                      Rename
-                    </button>
-
-                    <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
-                      onClick={() => setShowContextMenu(null)}
-                    >
-                      <Share2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                      Share
-                    </button>
-                    <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
-                      onClick={() => setShowContextMenu(null)}
-                    >
-                      <Archive className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                      Archive
-                    </button>
-                    <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
-                      onClick={() => setShowContextMenu(null)}
-                    >
-                      <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                      Add to favourites
-                    </button>
-                    <hr className="my-1 border-purple-700/50" />
-                    <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-red-900/30 transition-colors text-red-400"
-                      onClick={() => setShowContextMenu(null)}
-                    >
-                      <Trash2 className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
-                      Delete
-                    </button>
-                  </div>
-                )}
-
-                {/* Tooltip for collapsed state */}
-                {collapsed && hoveredConv === conv.id && (
-                  <div className="absolute left-16 top-1/2 transform -translate-y-1/2 bg-slate-800/95 text-white border-purple-700/50 px-2 py-1.5 rounded-lg shadow-lg z-50 min-w-48 sm:min-w-56 border pointer-events-none backdrop-blur-md">
-                    <div className="flex items-center gap-2 mb-1">
-                      <span className="font-medium text-xs">{conv.title}</span>
-                      {conv.starred && (
-                        <div className="w-2.5 h-2.5 sm:w-3 sm:h-3 bg-yellow-400 rounded-sm"></div>
-                      )}
-                    </div>
-                    <div className="text-xs text-purple-300">{conv.time}</div>
-                    <div className="text-xs text-purple-400 mt-1">
-                      {conv.preview}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ))}
+                </div>
+              ))}
           </div>
         </div>
 
         {/* Bottom Settings - Only show when not collapsed */}
         {!collapsed && (
-          <div className="p-4 border-t border-purple-600/50 flex-shrink-0">
+          <div className="px-4 py-2 border-t border-purple-600/50 flex-shrink-0">
             <button
-              onClick={() => {
-                // TODO: Open settings modal or navigate to settings page
-                console.log("Settings clicked");
-              }}
+              onClick={() => router.push("/settings")}
               className="w-full flex items-center gap-3 px-3 py-2 rounded-lg hover:bg-purple-800/20 transition-colors text-purple-300"
             >
               <Settings className="w-4 h-4" />
