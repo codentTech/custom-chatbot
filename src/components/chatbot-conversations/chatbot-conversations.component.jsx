@@ -106,44 +106,44 @@ const ChatbotConversations = ({
   };
 
   return (
-    <div className="h-full flex flex-col p-6">
+    <div className="h-full flex flex-col p-2 md:p-4 lg:p-6">
       {/* Header */}
-      <div className="flex items-center justify-between mb-6">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-3 md:gap-4 mb-4 md:mb-6 lg:mb-8">
+        <div className="flex items-center gap-2 md:gap-4">
           <button
             onClick={onBackToChatbots}
-            className="p-2 hover:bg-white/10 rounded-lg transition-colors text-purple-300 hover:text-white"
+            className="p-1.5 md:p-2 lg:p-3 hover:bg-white/10 rounded-xl transition-colors text-purple-300 hover:text-white"
           >
-            <ArrowLeft className="w-5 h-5" />
+            <ArrowLeft className="w-4 h-4 md:w-5 md:h-5 lg:w-6 lg:h-6" />
           </button>
           <div>
-            <h2 className="text-xl font-semibold text-white mb-1">
+            <h2 className="text-lg md:text-xl lg:text-2xl xl:text-3xl font-bold text-white mb-1 md:mb-2">
               {chatbot.name}
             </h2>
-            <p className="text-sm text-purple-300">
+            <p className="text-xs md:text-sm text-purple-300">
               {chatbot.conversationCount} conversations • {chatbot.lastActive}
             </p>
           </div>
         </div>
         <button
           onClick={() => setShowCreateForm(true)}
-          className="bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-4 py-2 rounded-lg flex items-center gap-2 transition-all duration-200 shadow-lg hover:shadow-purple-500/25"
+          className="w-full md:w-auto bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white px-3 md:px-4 lg:px-6 py-2 md:py-3 lg:py-4 rounded-xl flex items-center justify-center gap-2 md:gap-3 transition-all duration-200 shadow-lg hover:shadow-purple-500/25 text-sm md:text-base lg:text-lg font-semibold"
         >
-          <Plus className="w-4 h-4" />
+          <Plus className="w-3.5 h-3.5 md:w-4 md:h-4 lg:w-5 lg:h-5" />
           New Conversation
         </button>
       </div>
 
       {/* Search */}
-      <div className="mb-6">
+      <div className="mb-4 md:mb-6 lg:mb-8">
         <div className="relative">
-          <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-400 z-10" />
+          <Search className="absolute left-3 md:left-4 lg:left-5 top-1/2 transform -translate-y-1/2 w-4 h-4 md:w-5 md:h-5 text-purple-400 z-10" />
           <input
             type="text"
             placeholder="Search conversations..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            className="w-full pl-10 pr-4 py-2.5 bg-white/10 border border-white/20 rounded-lg text-white placeholder-purple-400 outline-none transition-all"
+            className="w-full pl-10 md:pl-12 lg:pl-14 pr-4 md:pr-6 py-2 md:py-3 lg:py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-400 outline-none transition-all text-sm md:text-base font-medium"
           />
         </div>
       </div>
@@ -151,14 +151,14 @@ const ChatbotConversations = ({
       {/* Conversations List */}
       <div className="flex-1 overflow-y-auto custom-scrollbar">
         {filteredConversations.length === 0 ? (
-          <div className="text-center py-12">
-            <div className="w-16 h-16 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-4">
-              <MessageSquare className="w-8 h-8 text-purple-400" />
+          <div className="text-center py-8 sm:py-12 md:py-16 lg:py-20">
+            <div className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 bg-white/10 rounded-full flex items-center justify-center mx-auto mb-3 sm:mb-4 md:mb-6">
+              <MessageSquare className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 text-purple-400" />
             </div>
-            <h3 className="text-lg font-semibold text-white mb-2">
+            <h3 className="text-base sm:text-lg md:text-xl lg:text-2xl font-bold text-white mb-2 sm:mb-3">
               No conversations found
             </h3>
-            <p className="text-purple-300 mb-4">
+            <p className="text-purple-300 mb-3 sm:mb-4 md:mb-6 text-sm sm:text-base md:text-lg max-w-md mx-auto">
               {searchQuery
                 ? "Try adjusting your search terms"
                 : "Start your first conversation to get started"}
@@ -166,37 +166,34 @@ const ChatbotConversations = ({
             {!searchQuery && (
               <button
                 onClick={() => setShowCreateForm(true)}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-lg transition-colors"
+                className="bg-purple-600 hover:bg-purple-700 text-white px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 rounded-xl transition-colors text-sm sm:text-base md:text-lg font-semibold"
               >
                 Start Conversation
               </button>
             )}
           </div>
         ) : (
-          <div className="space-y-3">
+          <div className="space-y-2 sm:space-y-3 md:space-y-4">
             {filteredConversations.map((conv) => (
               <div
                 key={conv.id}
-                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-xl p-4 hover:bg-white/15 transition-all duration-200 cursor-pointer group"
+                className="bg-white/10 backdrop-blur-sm border border-white/20 rounded-2xl p-2.5 sm:p-3 md:p-4 hover:bg-white/15 transition-all duration-200 cursor-pointer group hover:scale-105 hover:shadow-xl"
                 onClick={() => setSelectedConversation(conv.id)}
               >
-                {/* Header */}
-                <div className="flex items-start justify-between mb-3">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-2 mb-1">
-                      <h3 className="font-semibold text-white text-sm truncate">
+                {/* Compact Header - Single Line */}
+                <div className="flex items-center justify-between">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5 sm:gap-2 md:gap-3">
+                      <h3 className="font-bold text-white text-sm sm:text-base md:text-lg lg:text-xl truncate">
                         {conv.title}
                       </h3>
                       {conv.isStarred && (
-                        <Star className="w-4 h-4 text-yellow-400 fill-current" />
+                        <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5 md:w-4 md:h-4 text-yellow-400 fill-current flex-shrink-0" />
                       )}
                     </div>
-                    <p className="text-xs text-purple-300 line-clamp-2">
-                      {conv.preview}
-                    </p>
                   </div>
                   <button
-                    className={`p-1 hover:bg-white/20 rounded transition-colors ${
+                    className={`p-1 sm:p-1.5 md:p-2 hover:bg-white/20 rounded-lg transition-colors ${
                       showContextMenu === conv.id
                         ? "opacity-100"
                         : "opacity-0 group-hover:opacity-100"
@@ -206,50 +203,29 @@ const ChatbotConversations = ({
                       setShowContextMenu(conv.id);
                     }}
                   >
-                    <MoreVertical className="w-4 h-4 text-purple-300" />
+                    <MoreVertical className="w-3 h-3 text-purple-300" />
                   </button>
-                </div>
-
-                {/* Last Message */}
-                {conv.lastMessage && (
-                  <div className="mb-3">
-                    <p className="text-xs text-white/80 line-clamp-1">
-                      {conv.lastMessage}
-                    </p>
-                  </div>
-                )}
-
-                {/* Stats */}
-                <div className="flex items-center justify-between text-xs text-purple-300">
-                  <div className="flex items-center gap-1">
-                    <MessageSquare className="w-3 h-3" />
-                    <span>{conv.messageCount} messages</span>
-                  </div>
-                  <div className="flex items-center gap-1">
-                    <Calendar className="w-3 h-3" />
-                    <span>{conv.timestamp}</span>
-                  </div>
                 </div>
 
                 {/* Context Menu */}
                 {showContextMenu === conv.id && (
-                  <div className="absolute right-2 top-8 bg-slate-800/95 border-purple-700/50 backdrop-blur-md border rounded-lg shadow-xl z-20 min-w-32 sm:min-w-36 py-1">
+                  <div className="absolute right-2 top-8 bg-slate-800/95 border-purple-700/50 backdrop-blur-md border rounded-xl shadow-xl z-20 min-w-28 sm:min-w-32 lg:min-w-36 py-1">
                     <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
+                      className="w-full flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
                       onClick={() => setShowContextMenu(null)}
                     >
                       <Edit className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       Rename
                     </button>
                     <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
+                      className="w-full flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 text-xs hover:bg-purple-700/30 transition-colors text-purple-200"
                       onClick={() => setShowContextMenu(null)}
                     >
                       <MessageSquare className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
                       Share
                     </button>
                     <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-red-900/30 transition-colors text-red-400"
+                      className="w-full flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 text-xs hover:bg-red-900/30 transition-colors text-red-400"
                       onClick={() => setShowContextMenu(null)}
                     >
                       <Star className="w-3 h-3 sm:w-3.5 sm:h-3.5" />
@@ -259,7 +235,7 @@ const ChatbotConversations = ({
                     </button>
                     <hr className="my-1 border-purple-700/50" />
                     <button
-                      className="w-full flex items-center gap-2 px-2 py-1.5 text-xs hover:bg-red-900/30 transition-colors text-red-400"
+                      className="w-full flex items-center gap-1.5 sm:gap-2 px-2 py-1.5 text-xs hover:bg-red-900/30 transition-colors text-red-400"
                       onClick={() => setShowContextMenu(null)}
                     >
                       <div className="w-3 h-3 sm:w-3.5 sm:h-3.5 bg-red-400 rounded-sm"></div>
@@ -275,23 +251,26 @@ const ChatbotConversations = ({
 
       {/* Create Conversation Modal */}
       {showCreateForm && (
-        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-slate-800 border border-white/20 rounded-xl p-6 w-full max-w-md mx-4">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white">
+        <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-3 sm:p-4 md:p-6">
+          <div className="bg-slate-800 border border-white/20 rounded-2xl p-4 sm:p-6 md:p-8 w-full max-w-md mx-auto">
+            <div className="flex items-center justify-between mb-4 sm:mb-6 md:mb-8">
+              <h3 className="text-lg sm:text-xl md:text-2xl font-bold text-white">
                 Start New Conversation
               </h3>
               <button
                 onClick={() => setShowCreateForm(false)}
-                className="text-purple-300 hover:text-white transition-colors"
+                className="text-purple-300 hover:text-white transition-colors p-1 sm:p-2"
               >
                 ✕
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="space-y-4">
+            <form
+              onSubmit={handleSubmit}
+              className="space-y-3 sm:space-y-4 md:space-y-6"
+            >
               <div>
-                <label className="block text-sm font-medium text-purple-300 mb-2">
+                <label className="block text-sm sm:text-base md:text-lg font-semibold text-purple-300 mb-2 sm:mb-3">
                   Title
                 </label>
                 <input
@@ -303,14 +282,14 @@ const ChatbotConversations = ({
                       title: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-purple-400 outline-none transition-all"
+                  className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-400 outline-none transition-all text-sm sm:text-base md:text-lg font-medium"
                   placeholder="What would you like to discuss?"
                   required
                 />
               </div>
 
               <div>
-                <label className="block text-sm font-medium text-purple-300 mb-2">
+                <label className="block text-sm sm:text-base md:text-lg font-semibold text-purple-300 mb-2 sm:mb-3">
                   Description (Optional)
                 </label>
                 <textarea
@@ -321,23 +300,23 @@ const ChatbotConversations = ({
                       description: e.target.value,
                     })
                   }
-                  className="w-full px-3 py-2 bg-white/10 border border-white/20 rounded-lg text-white placeholder-purple-400 outline-none transition-all resize-none"
+                  className="w-full px-3 sm:px-4 md:px-5 py-2 sm:py-3 md:py-4 bg-white/10 border border-white/20 rounded-xl text-white placeholder-purple-400 outline-none transition-all resize-none text-sm sm:text-base md:text-lg font-medium"
                   placeholder="Add some context about this conversation..."
                   rows={3}
                 />
               </div>
 
-              <div className="flex gap-3 pt-2">
+              <div className="flex gap-2 sm:gap-3 md:gap-4 pt-2 sm:pt-4 md:pt-6">
                 <button
                   type="button"
                   onClick={() => setShowCreateForm(false)}
-                  className="flex-1 px-4 py-2 bg-white/10 hover:bg-white/20 text-white rounded-lg transition-colors border border-white/20"
+                  className="flex-1 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 bg-white/10 hover:bg-white/20 text-white rounded-xl transition-colors border border-white/20 text-sm sm:text-base md:text-lg font-semibold"
                 >
                   Cancel
                 </button>
                 <button
                   type="submit"
-                  className="flex-1 px-4 py-2 bg-purple-600 hover:bg-purple-700 text-white rounded-lg transition-colors"
+                  className="flex-1 px-3 sm:px-4 md:px-6 py-2 sm:py-3 md:py-4 bg-purple-600 hover:bg-purple-700 text-white rounded-xl transition-colors text-sm sm:text-base md:text-lg font-semibold"
                 >
                   Start Conversation
                 </button>

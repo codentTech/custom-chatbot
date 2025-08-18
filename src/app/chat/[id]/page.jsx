@@ -108,6 +108,8 @@ export default function ChatPage() {
         <Header
           selectedModel={selectedModel}
           setSelectedModel={setSelectedModel}
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
         />
 
         {/* Chat Area Component */}
@@ -123,33 +125,35 @@ export default function ChatPage() {
         />
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - Fixed z-index to be below sidebar */}
       {sidebarOpen && (
         <div
-          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          className="fixed inset-0 bg-black/50 z-20 lg:hidden"
           onClick={() => setSidebarOpen(false)}
         />
       )}
 
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setSidebarOpen(true)}
-        className="fixed top-4 left-4 z-50 lg:hidden p-2 bg-slate-800 rounded-lg text-white"
-      >
-        <svg
-          className="w-6 h-6"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
+      {/* Mobile Menu Button - Only show when sidebar is closed */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className="fixed top-4 left-4 z-50 lg:hidden p-2 bg-slate-800/90 hover:bg-slate-700/90 border border-purple-700/50 rounded-lg text-white backdrop-blur-md transition-all duration-200"
         >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M4 6h16M4 12h16M4 18h16"
-          />
-        </svg>
-      </button>
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M4 6h16M4 12h16M4 18h16"
+            />
+          </svg>
+        </button>
+      )}
     </div>
   );
 }

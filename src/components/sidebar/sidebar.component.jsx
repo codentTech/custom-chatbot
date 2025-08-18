@@ -45,6 +45,23 @@ function Sidebar({
     setShowContextMenu(showContextMenu === convId ? null : convId);
   };
 
+  const handleChatbotClick = (path) => {
+    // On mobile, close sidebar after navigation
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+    router.push(path);
+  };
+
+  const handleConversationClick = (convId) => {
+    setSelectedConversation(convId);
+    // On mobile, close sidebar after navigation
+    if (window.innerWidth < 1024) {
+      setSidebarOpen(false);
+    }
+    router.push(`/chat/${convId}`);
+  };
+
   const filteredConversations = conversations.filter((conv) =>
     conv.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
@@ -78,9 +95,14 @@ function Sidebar({
       <div
         className={`${
           collapsed ? "w-16" : "w-80"
-        } bg-gradient-to-b from-slate-900 via-purple-900/20 to-slate-900 border-r border-purple-800/30 transition-all duration-300 ease-in-out flex-shrink-0 ${
+        } bg-slate-900/95 backdrop-blur-md border-r border-purple-800/30 transition-all duration-300 ease-in-out flex-shrink-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
         } lg:translate-x-0 fixed lg:relative z-30 h-full flex flex-col`}
+        style={{
+          background:
+            "linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(88, 28, 135, 0.2) 50%, rgba(15, 23, 42, 0.95) 100%)",
+          backdropFilter: "blur(20px)",
+        }}
       >
         {/* Header */}
         <div
@@ -165,7 +187,7 @@ function Sidebar({
                 Chatbots
               </h3>
               <button
-                onClick={() => router.push("/chatbots")}
+                onClick={() => handleChatbotClick("/chatbots")}
                 className="p-1 hover:bg-white/10 rounded transition-colors text-purple-400 hover:text-white"
                 title="Manage chatbots"
               >
@@ -176,7 +198,7 @@ function Sidebar({
             {/* Quick Chatbot Access */}
             <div className="space-y-1">
               <button
-                onClick={() => router.push("/chatbots/1")}
+                onClick={() => handleChatbotClick("/chatbots/1")}
                 className="w-full flex items-center justify-between px-2 py-1 hover:bg-white/10 rounded transition-colors text-left group"
               >
                 <span className="text-white text-xs font-medium">
@@ -186,7 +208,7 @@ function Sidebar({
               </button>
 
               <button
-                onClick={() => router.push("/chatbots/2")}
+                onClick={() => handleChatbotClick("/chatbots/2")}
                 className="w-full flex items-center justify-between px-2 py-1 hover:bg-white/10 rounded transition-colors text-left group"
               >
                 <span className="text-white text-xs font-medium">Writing</span>
@@ -194,7 +216,7 @@ function Sidebar({
               </button>
 
               <button
-                onClick={() => router.push("/chatbots/3")}
+                onClick={() => handleChatbotClick("/chatbots/3")}
                 className="w-full flex items-center justify-between px-2 py-1 hover:bg-white/10 rounded transition-colors text-left group"
               >
                 <span className="text-white text-xs font-medium">
@@ -204,7 +226,7 @@ function Sidebar({
               </button>
 
               <button
-                onClick={() => router.push("/chatbots/4")}
+                onClick={() => handleChatbotClick("/chatbots/4")}
                 className="w-full flex items-center justify-between px-2 py-1 hover:bg-white/10 rounded transition-colors text-left group"
               >
                 <span className="text-white text-xs font-medium">Business</span>
@@ -212,7 +234,7 @@ function Sidebar({
               </button>
 
               <button
-                onClick={() => router.push("/chatbots/5")}
+                onClick={() => handleChatbotClick("/chatbots/5")}
                 className="w-full flex items-center justify-between px-2 py-1 hover:bg-white/10 rounded transition-colors text-left group"
               >
                 <span className="text-white text-xs font-medium">Learning</span>
@@ -221,7 +243,7 @@ function Sidebar({
             </div>
 
             <button
-              onClick={() => router.push("/chatbots")}
+              onClick={() => handleChatbotClick("/chatbots")}
               className="w-full mt-1.5 px-2 py-1 text-xs text-purple-300 hover:text-white hover:bg-white/10 rounded transition-colors font-medium"
             >
               View All →
@@ -243,10 +265,7 @@ function Sidebar({
                 onMouseLeave={() => setHoveredConv(null)}
               >
                 <button
-                  onClick={() => {
-                    setSelectedConversation(conv.id);
-                    router.push(`/chat/${conv.id}`);
-                  }}
+                  onClick={() => handleConversationClick(conv.id)}
                   className={`w-full flex items-center px-2 py-0.5 rounded transition-all duration-200 ${
                     selectedConversation === conv.id
                       ? "bg-gradient-to-r from-purple-800/40 via-purple-700/50 to-purple-800/40 shadow-lg border border-purple-600/30"
@@ -290,7 +309,7 @@ function Sidebar({
                           className="p-1 hover:bg-purple-700/40 rounded-md transition-colors cursor-pointer"
                           title="More options"
                         >
-                          <MoreVertical className="w-2.5 h-2.5 sm:w-3 sm:h-3 text-purple-300" />
+                          <MoreVertical className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-purple-300" />
                         </div>
                       </div>
                     </div>

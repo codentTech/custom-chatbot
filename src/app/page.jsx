@@ -102,6 +102,8 @@ export default function AIChatbotUI() {
         <Header
           selectedModel={selectedModel}
           setSelectedModel={setSelectedModel}
+          sidebarOpen={sidebarOpen}
+          setSidebarOpen={setSidebarOpen}
         />
 
         {/* New Chat Interface */}
@@ -120,7 +122,7 @@ export default function AIChatbotUI() {
                     strokeLinecap="round"
                     strokeLinejoin="round"
                     strokeWidth={2}
-                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
+                    d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"
                   />
                 </svg>
               </div>
@@ -173,7 +175,7 @@ export default function AIChatbotUI() {
                 <div className="flex items-center gap-1.5 sm:gap-2">
                   <button className="p-1.5 sm:p-2 bg-white/10 hover:bg-white/20 rounded-lg transition-colors">
                     <svg
-                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                      className="w-3.5 sm:w-4 sm:h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -192,7 +194,7 @@ export default function AIChatbotUI() {
                     className="px-3 sm:px-4 py-1.5 sm:py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 disabled:from-purple-800/50 disabled:to-purple-900/50 disabled:cursor-not-allowed text-white rounded-lg transition-all duration-200 flex items-center gap-1.5 sm:gap-2 font-medium text-xs sm:text-sm"
                   >
                     <svg
-                      className="w-3.5 h-3.5 sm:w-4 sm:h-4"
+                      className="w-3.5 sm:w-4 sm:h-4"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -213,7 +215,7 @@ export default function AIChatbotUI() {
         </div>
       </div>
 
-      {/* Mobile Overlay */}
+      {/* Mobile Overlay - Fixed z-index to be below sidebar */}
       {sidebarOpen && (
         <div
           className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-20"
@@ -221,14 +223,16 @@ export default function AIChatbotUI() {
         />
       )}
 
-      {/* Mobile Menu Button */}
-      <button
-        onClick={() => setSidebarOpen(true)}
-        className={`lg:hidden fixed top-3 left-3 z-40 p-2 ${isDarkMode ? "bg-slate-800/90 hover:bg-slate-700/90 border-purple-700/50" : "bg-white/90 hover:bg-purple-50/90 border-purple-200"} border rounded-lg backdrop-blur-md transition-all duration-200 ${isDarkMode ? "text-purple-300" : "text-purple-600"} shadow-lg`}
-        aria-label="Open menu"
-      >
-        <Menu size={16} />
-      </button>
+      {/* Mobile Menu Button - Only show when sidebar is closed */}
+      {!sidebarOpen && (
+        <button
+          onClick={() => setSidebarOpen(true)}
+          className={`lg:hidden fixed top-3 left-3 z-40 p-2 ${isDarkMode ? "bg-slate-800/90 hover:bg-slate-700/90 border-purple-700/50" : "bg-white/90 hover:bg-purple-50/90 border-purple-200"} border rounded-lg backdrop-blur-md transition-all duration-200 ${isDarkMode ? "text-purple-300" : "text-purple-600"} shadow-lg`}
+          aria-label="Open menu"
+        >
+          <Menu size={16} />
+        </button>
+      )}
     </div>
   );
 }

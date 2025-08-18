@@ -98,6 +98,221 @@ body {
   scrollbar-color: #7c3aed #0f0f23;
 }
 
+/* Hide scrollbar utility */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* Internet Explorer 10+ */
+  scrollbar-width: none; /* Firefox */
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Safari and Chrome */
+}
+
+/* Line clamp utilities */
+.line-clamp-1 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 1;
+}
+
+.line-clamp-2 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.line-clamp-3 {
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+}
+
+/* Responsive Design for Chatbot Management */
+@media (min-width: 640px) {
+  .chatbot-management-container {
+    padding: 1rem !important;
+  }
+
+  .chatbot-management-header {
+    gap: 1rem !important;
+    margin-bottom: 1.5rem !important;
+  }
+
+  .chatbot-management-title {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .chatbot-management-description {
+    font-size: 1rem !important;
+  }
+
+  .chatbot-management-button {
+    padding: 1rem 2rem !important;
+    font-size: 1rem !important;
+  }
+
+  .chatbot-management-search {
+    padding: 0.875rem 1.25rem 0.875rem 3rem !important;
+  }
+
+  .chatbot-management-filters {
+    gap: 0.75rem !important;
+    padding-bottom: 0.75rem !important;
+  }
+
+  .chatbot-management-filter-button {
+    padding: 0.625rem 1rem !important;
+    font-size: 0.875rem !important;
+  }
+
+  .chatbot-management-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1rem !important;
+  }
+
+  .chatbot-management-card {
+    padding: 1rem !important;
+  }
+
+  .chatbot-management-card-title {
+    font-size: 1rem !important;
+    margin-bottom: 0.75rem !important;
+  }
+
+  .chatbot-management-card-description {
+    font-size: 0.875rem !important;
+  }
+}
+
+@media (min-width: 768px) {
+  .chatbot-management-container {
+    padding: 1.5rem !important;
+  }
+
+  .chatbot-management-header {
+    flex-direction: row !important;
+    align-items: center !important;
+    gap: 1.5rem !important;
+    margin-bottom: 2rem !important;
+  }
+
+  .chatbot-management-title {
+    font-size: 1.75rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .chatbot-management-description {
+    font-size: 1.125rem !important;
+    margin: 0 !important;
+  }
+
+  .chatbot-management-button {
+    width: auto !important;
+    margin: 0 !important;
+    padding: 1.25rem 2.5rem !important;
+    font-size: 1.125rem !important;
+  }
+
+  .chatbot-management-search {
+    padding: 1rem 1.5rem 1rem 3.5rem !important;
+  }
+
+  .chatbot-management-filters {
+    gap: 1rem !important;
+    padding-bottom: 1rem !important;
+  }
+
+  .chatbot-management-filter-button {
+    padding: 0.75rem 1.25rem !important;
+    font-size: 1rem !important;
+  }
+
+  .chatbot-management-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 1.5rem !important;
+  }
+
+  .chatbot-management-card {
+    padding: 1.25rem !important;
+  }
+
+  .chatbot-management-card-title {
+    font-size: 1.125rem !important;
+    margin-bottom: 1rem !important;
+  }
+
+  .chatbot-management-card-description {
+    font-size: 1rem !important;
+  }
+}
+
+@media (min-width: 1024px) {
+  .chatbot-management-container {
+    padding: 2rem !important;
+  }
+
+  .chatbot-management-header {
+    gap: 2rem !important;
+    margin-bottom: 2.5rem !important;
+  }
+
+  .chatbot-management-title {
+    font-size: 2rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .chatbot-management-description {
+    font-size: 1.25rem !important;
+  }
+
+  .chatbot-management-button {
+    padding: 1.5rem 3rem !important;
+    font-size: 1.25rem !important;
+  }
+
+  .chatbot-management-search {
+    padding: 1.25rem 2rem 1.25rem 4rem !important;
+  }
+
+  .chatbot-management-filters {
+    gap: 1.25rem !important;
+    padding-bottom: 1.25rem !important;
+  }
+
+  .chatbot-management-filter-button {
+    padding: 1rem 1.5rem !important;
+    font-size: 1.125rem !important;
+  }
+
+  .chatbot-management-grid {
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 2rem !important;
+  }
+
+  .chatbot-management-card {
+    padding: 1.5rem !important;
+  }
+
+  .chatbot-management-card-title {
+    font-size: 1.25rem !important;
+    margin-bottom: 1.25rem !important;
+  }
+
+  .chatbot-management-card-description {
+    font-size: 1.125rem !important;
+  }
+}
+
+@media (min-width: 1280px) {
+  .chatbot-management-grid {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+}
+
 /* Custom Scrollbar for specific elements - Extra Thick */
 .custom-scrollbar::-webkit-scrollbar {
   width: 32px;

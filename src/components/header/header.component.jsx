@@ -11,7 +11,6 @@ import {
   Sparkles,
   Brain,
   Zap,
-  s,
 } from "lucide-react";
 import { useState, useEffect } from "react";
 
@@ -203,19 +202,8 @@ export default function Header({
         <div className="relative z-10 flex items-center w-full">
           {/* Left Section */}
           <div className="flex items-center gap-1.5 sm:gap-3 flex-1">
-            <button
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="lg:hidden p-1.5 rounded-lg hover:bg-gray-800/50 transition-colors backdrop-blur-sm"
-            >
-              {sidebarOpen ? (
-                <X className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              ) : (
-                <Menu className="w-3.5 h-3.5 sm:w-4 sm:h-4" />
-              )}
-            </button>
-
-            {/* Model Dropdown - Moved to left section */}
-            <div className="relative w-full max-w-[200px] sm:max-w-[240px] md:max-w-[280px] lg:max-w-[320px]">
+            {/* Model Dropdown - Left on desktop, hidden on mobile */}
+            <div className="relative w-full max-w-[200px] sm:max-w-[240px] lg:max-w-[280px] hidden md:block">
               <button
                 onClick={handleModelDropdownToggle}
                 className={`w-full flex items-center justify-between px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-lg border shadow-sm transition-all duration-200 text-xs font-medium group hover:shadow-md bg-gray-900 border-purple-900 text-purple-200 hover:border-purple-700 hover:bg-gray-800`}
@@ -237,8 +225,30 @@ export default function Header({
             </div>
           </div>
 
-          {/* Center Section - Empty now */}
-          <div className="flex items-center justify-center flex-1"></div>
+          {/* Center Section - Model Dropdown (Mobile) */}
+          <div className="flex items-center justify-center flex-1">
+            {/* Model Dropdown - Center on mobile, hidden on md+ */}
+            <div className="relative w-full max-w-[200px] sm:max-w-[240px] md:hidden">
+              <button
+                onClick={handleModelDropdownToggle}
+                className={`w-full flex items-center justify-between px-2.5 sm:px-3 py-2 sm:py-2.5 rounded-lg border shadow-sm transition-all duration-200 text-xs font-medium group hover:shadow-md bg-gray-900 border-purple-900 text-purple-200 hover:border-purple-700 hover:bg-gray-800`}
+              >
+                <div className="flex items-center gap-2 sm:gap-2.5">
+                  <selectedModelData.icon className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-purple-400" />
+                  <div className="text-left">
+                    <div className="font-semibold text-xs">
+                      {selectedModelData.label}
+                    </div>
+                  </div>
+                </div>
+                <ChevronDown
+                  className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-200 ${
+                    showModelDropdown ? "rotate-180" : ""
+                  } text-purple-400`}
+                />
+              </button>
+            </div>
+          </div>
 
           {/* Right Section */}
           <div className="flex items-center gap-1 sm:gap-1.5 flex-1 justify-end">
