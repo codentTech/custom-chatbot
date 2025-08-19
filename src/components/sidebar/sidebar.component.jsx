@@ -73,7 +73,7 @@ function Sidebar({
           collapsed ? "w-16" : "w-80"
         } bg-slate-900/95 backdrop-blur-md border-r border-purple-800/30 transition-all duration-300 ease-in-out flex-shrink-0 ${
           sidebarOpen ? "translate-x-0" : "-translate-x-full"
-        } lg:translate-x-0 fixed lg:relative z-30 h-full flex flex-col`}
+        } lg:translate-x-0 fixed lg:relative z-[9999] h-full flex flex-col`}
         style={{
           background:
             "linear-gradient(180deg, rgba(15, 23, 42, 0.95) 0%, rgba(88, 28, 135, 0.2) 50%, rgba(15, 23, 42, 0.95) 100%)",
@@ -243,11 +243,13 @@ function Sidebar({
 
         {/* Conversations */}
         <div className="flex-1 overflow-y-auto px-1.5 min-h-0 custom-scrollbar">
-          <div className="flex items-center justify-between mb-2">
-            <h3 className="text-xs font-semibold text-purple-300 uppercase tracking-wider">
-              Recent Conversations
-            </h3>
-          </div>
+          {!collapsed && (
+            <div className="flex items-center justify-between mb-2">
+              <h3 className="text-xs font-semibold text-purple-300 uppercase tracking-wider">
+                Recent Conversations
+              </h3>
+            </div>
+          )}
           <div className="space-y-0.5">
             {conversations
               .filter((conv) => !conv.starred)

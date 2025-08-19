@@ -203,7 +203,7 @@ export default function Header({
             {!sidebarOpen && (
               <button
                 onClick={() => setSidebarOpen(true)}
-                className="lg:hidden fixed top-2 left-3 z-40 p-2 bg-slate-800/90 hover:bg-slate-700/90 border border-purple-700/50 rounded-lg text-purple-200 backdrop-blur-md transition-all duration-200 flex items-center justify-center"
+                className="lg:hidden p-2 bg-slate-800/90 hover:bg-slate-700/90 border border-purple-700/50 rounded-lg text-purple-200 backdrop-blur-md transition-all duration-200 flex items-center justify-center"
               >
                 <Menu size={16} className="sm:w-4 sm:h-4" />
               </button>
@@ -259,7 +259,6 @@ export default function Header({
             <button className="flex items-center gap-2 px-3 py-2 bg-gradient-to-r from-purple-600 to-purple-700 hover:from-purple-700 hover:to-purple-800 text-white rounded-lg transition-all duration-200 font-medium text-sm shadow-lg hover:shadow-purple-500/25">
               <User className="w-4 h-4" />
               <span className="hidden sm:inline">Sign In</span>
-              <span className="sm:hidden">Login</span>
             </button>
 
             {/* User Profile Dropdown - Commented out for now */}

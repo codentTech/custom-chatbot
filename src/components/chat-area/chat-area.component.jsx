@@ -110,7 +110,7 @@ function ChatArea({
             style={{ animationDelay: "2s" }}
           />
         </div>
-        <div className="relative z-10 max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-4 space-y-2 sm:space-y-4">
+        <div className="relative z-10 max-w-4xl mx-auto px-2 sm:px-4 py-2 sm:py-4 space-y-2 sm:space-y-4 mt-4">
           {chatMessages.map((msg) => (
             <div
               key={msg.id}

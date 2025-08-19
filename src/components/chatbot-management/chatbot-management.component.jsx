@@ -136,11 +136,11 @@ const ChatbotManagement = ({ onCreateChatbot }) => {
   };
 
   return (
-    <div className="h-full flex flex-col overflow-hidden">
+    <div className="h-full flex flex-col">
       {/* Main Container with Max Width */}
-      <div className="max-w-6xl mx-auto w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6">
+      <div className="max-w-6xl mx-auto w-full px-3 sm:px-4 md:px-6 py-4 sm:py-6 flex flex-col h-full">
         {/* Enhanced Header Section with Responsive Flex Layout */}
-        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 sm:gap-6 mb-4 sm:mb-6 flex-shrink-0">
           <div className="flex-1 min-w-0">
             <h2 className="text-xl sm:text-2xl lg:text-3xl font-bold text-white mb-1 sm:mb-2">
               My Chatbots
@@ -160,7 +160,7 @@ const ChatbotManagement = ({ onCreateChatbot }) => {
         </div>
 
         {/* Search and Filters Section - Responsive Layout */}
-        <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-0 sm:flex sm:flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-4">
+        <div className="mb-4 sm:mb-6 space-y-3 sm:space-y-0 sm:flex sm:flex-col lg:flex-row lg:items-center lg:justify-between lg:gap-4 flex-shrink-0">
           {/* Search Bar */}
           <div className="relative flex-1 max-w-full lg:max-w-md">
             <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 w-4 h-4 text-purple-400" />
@@ -253,7 +253,7 @@ const ChatbotManagement = ({ onCreateChatbot }) => {
                     </div>
                     <div className="flex items-center gap-1.5">
                       <Calendar className="w-3 h-3" />
-                      <span className="font-medium text-xs truncate">
+                      <span className="text-xs truncate">
                         {chatbot.lastActive}
                       </span>
                     </div>

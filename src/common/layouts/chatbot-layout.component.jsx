@@ -62,17 +62,19 @@ export default function ChatbotLayout({
           />
 
           {/* Main Content */}
-          <div className="flex-1 overflow-hidden min-w-0">{children}</div>
+          <div className="flex-1 overflow-hidden min-w-0">
+            {sidebarOpen && (
+              <div
+                className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-10"
+                onClick={() => setSidebarOpen(false)}
+              />
+            )}
+            {children}
+          </div>
         </div>
       </div>
 
       {/* Mobile Overlay - Fixed z-index to be below sidebar */}
-      {sidebarOpen && (
-        <div
-          className="lg:hidden fixed inset-0 bg-black/50 backdrop-blur-sm z-20"
-          onClick={() => setSidebarOpen(false)}
-        />
-      )}
     </div>
   );
 }
